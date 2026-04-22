@@ -169,5 +169,5 @@ Corpus parquet rows carry a per-step `license_spdx` column so downstream work ca
 ## Authors
 
 - **Ali Hassaan Mughal**, Independent Researcher, Applied MBA (Data Analytics), Texas Wesleyan University. ORCID [0000-0002-0724-9197](https://orcid.org/0000-0002-0724-9197). `alihassaanmughal.work@gmail.com`.
-- **Noor Fatima**, Independent Researcher, B.E. Computer Engineering, National University of Sciences and Technology (NUST), Pakistan. `noorfatima.ce@gmail.com`.
+- **Noor Fatima**, Independent Researcher, B.E. Computer Engineering, National University of Sciences and Technology (NUST), Pakistan. `nfatima.bce25seecs@seecs.edu.pk`.
 - **Muhammad Bilal**, Independent Researcher, M.Sc. Management, Technical University of Munich. ORCID [0000-0003-4106-0256](https://orcid.org/0000-0003-4106-0256). `m.bilal@tum.de`.
