@@ -27,7 +27,7 @@ Given a `features/` directory, `cukereuse` finds that a phrasing like
 
 and its paraphrases (`status 200`, `the response status should be "200"`, `I should get a 200 response code`) appear together in tens of thousands of places. The HTML report groups them, shows every file and line, and names a canonical phrasing to consolidate toward.
 
-On the paper's public corpus, the top cluster groups **20,737 occurrences across 2,245 files in 43 repositories**. The corpus-wide step-weighted duplication rate is **80.2%**; the median repository's rate is **58.6%**.
+On this repository's public corpus, the top cluster groups **20,737 occurrences across 2,245 files in 43 repositories**. The corpus-wide step-weighted duplication rate is **80.2%**; the median repository's rate is **58.6%**.
 
 ## Install
 
@@ -69,7 +69,7 @@ Every run produces a browsable HTML report (inline CSS, collapsible cluster card
 
 Thresholds are calibrated against 1,020 labelled pairs under two evaluation protocols (primary rubric and a score-free second-pass relabelling). Full numbers, bootstrap confidence intervals, and the pair-vs-cluster threshold analysis will be in the accompanying paper (forthcoming).
 
-The paper's recommendation: **near-exact** is the strongest pair-level classifier (F₁ = 0.822 on score-free labels, F₁ = 0.862 on the primary rubric). **Hybrid** is the recommended strategy for building project-wide cluster reports because its Levenshtein band prevents transitive chaining that pure semantic clustering suffers from.
+On the calibration benchmark included in this repository, **near-exact** is the strongest pair-level classifier (F₁ = 0.822 on score-free labels, F₁ = 0.862 on the primary rubric). **Hybrid** is the recommended strategy for building project-wide cluster reports because its Levenshtein band prevents transitive chaining that pure semantic clustering suffers from.
 
 ## What's in the corpus
 
@@ -113,7 +113,7 @@ uv run python scripts/write_labels.py
 # Calibration analyses (baselines, CIs, score-free, licence chi-square, size scatter)
 uv run python scripts/revision_analyses.py
 
-# Regenerate paper figures
+# Regenerate analysis figures (written to ./figures/ by default)
 uv run python scripts/generate_figures.py
 ```
 
@@ -121,7 +121,7 @@ Mining is resumable. API responses cache under `scripts/mine_cache/`; re-runs sk
 
 ## Key numbers
 
-These are the citable headline numbers from the paper.
+These are the citable headline numbers from the calibration bundle in this repository. The accompanying paper presents them with full methodology, bootstrap confidence intervals, and the licence-stratification and size-confound analyses.
 
 - **Corpus:** 347 public GitHub repositories, 23,667 parsed `.feature` files, 1,113,616 Gherkin steps.
 - **Step-weighted exact-duplicate rate:** 80.2%.
@@ -152,11 +152,9 @@ The preprint URL and DOI will be added here once they are available;
 
 Use the `CITATION.cff` file in the root of this repository (GitHub
 renders it as the "Cite this repository" widget in the sidebar).
-Once the preprint is live, the full citation form will be populated
+Once the preprint is live, the full citation entry will be populated
 with its arXiv ID and DOI. Until then, cite the dataset and tool
 release via the repository URL and the release tag.
-
-`CITATION.cff` mirrors the same metadata for GitHub's citation widget.
 
 ## Licence
 

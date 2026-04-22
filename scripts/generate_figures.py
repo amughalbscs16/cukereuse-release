@@ -1,5 +1,5 @@
 # ruff: noqa: I001
-"""Generate publication-quality PDF figures for the cukereuse paper.
+"""Generate publication-quality PDF figures from the cukereuse corpus.
 
 Reads the analysis artefacts already on disk:
   corpus/steps.parquet
@@ -8,7 +8,7 @@ Reads the analysis artefacts already on disk:
   analysis/calibration.json
   analysis/license_stratified.json
 
-Writes PDFs to paper/figures/.
+Writes PDFs to ./figures/ by default (override with --out-dir).
 """
 
 from __future__ import annotations
@@ -544,7 +544,7 @@ def fig_strategy_ladder(out_dir: Path) -> None:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n", 1)[0] if __doc__ else "")
-    ap.add_argument("--out-dir", type=Path, default=Path("paper/figures"))
+    ap.add_argument("--out-dir", type=Path, default=Path("figures"))
     args = ap.parse_args()
 
     args.out_dir.mkdir(parents=True, exist_ok=True)
