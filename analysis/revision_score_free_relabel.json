@@ -1,0 +1,95 @@
+{
+  "n_pairs": 1020,
+  "n_duplicates_primary": 494,
+  "n_duplicates_score_free": 565,
+  "rule_composition_score_free": {
+    "R10_sf_default": 371,
+    "R8_sf": 47,
+    "P4_sf_token_jaccard": 74,
+    "R4_sf": 16,
+    "R5_sf": 13,
+    "P1_sf_exact_after_normalisation": 458,
+    "R7_sf": 5,
+    "P3_sf_subsequence": 32,
+    "R6_sf": 3,
+    "P2_sf_token_multiset": 1
+  },
+  "detector_vs_score_free_labels": {
+    "semantic": {
+      "threshold": 0.79,
+      "precision": 0.7025,
+      "recall": 0.8566,
+      "f1": 0.7719,
+      "tp": 484,
+      "fp": 205,
+      "fn": 81,
+      "tn": 250
+    },
+    "near_exact": {
+      "threshold": 0.71,
+      "precision": 0.75,
+      "recall": 0.908,
+      "f1": 0.8215,
+      "tp": 513,
+      "fp": 171,
+      "fn": 52,
+      "tn": 284
+    },
+    "hybrid": {
+      "threshold": 0.7,
+      "precision": 0.5691,
+      "recall": 0.692,
+      "f1": 0.6246,
+      "tp": 391,
+      "fp": 296,
+      "fn": 174,
+      "tn": 159
+    }
+  },
+  "cohen_kappa_primary_vs_score_free": {
+    "kappa": 0.4704,
+    "observed_agreement": 0.7343,
+    "expected_agreement": 0.4983,
+    "landis_koch_interpretation": "moderate",
+    "n_agree": 749,
+    "n_disagree": 271
+  },
+  "cosine_band_positive_rates": [
+    {
+      "band": "[0.50,0.70)",
+      "n": 170,
+      "n_dup_primary": 0,
+      "n_dup_score_free": 22
+    },
+    {
+      "band": "[0.70,0.80)",
+      "n": 170,
+      "n_dup_primary": 0,
+      "n_dup_score_free": 63
+    },
+    {
+      "band": "[0.80,0.85)",
+      "n": 170,
+      "n_dup_primary": 52,
+      "n_dup_score_free": 99
+    },
+    {
+      "band": "[0.85,0.90)",
+      "n": 170,
+      "n_dup_primary": 128,
+      "n_dup_score_free": 108
+    },
+    {
+      "band": "[0.90,0.95)",
+      "n": 170,
+      "n_dup_primary": 147,
+      "n_dup_score_free": 127
+    },
+    {
+      "band": "[0.95,1.01)",
+      "n": 170,
+      "n_dup_primary": 167,
+      "n_dup_score_free": 146
+    }
+  ]
+}

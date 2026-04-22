@@ -1,0 +1,52 @@
+{
+  "per_class": {
+    "permissive": {
+      "n_steps": 635586,
+      "n_unique": 112494,
+      "n_duplicate_occurrences": 523092,
+      "dup_rate": 0.823
+    },
+    "copyleft": {
+      "n_steps": 232297,
+      "n_unique": 54472,
+      "n_duplicate_occurrences": 177825,
+      "dup_rate": 0.7655
+    },
+    "unknown": {
+      "n_steps": 174077,
+      "n_unique": 35492,
+      "n_duplicate_occurrences": 138585,
+      "dup_rate": 0.7961
+    },
+    "unlicensed": {
+      "n_steps": 71656,
+      "n_unique": 23838,
+      "n_duplicate_occurrences": 47818,
+      "dup_rate": 0.6673
+    }
+  },
+  "chi_square": {
+    "chi2": 11520.15,
+    "df": 3,
+    "p_value": 0.0,
+    "interpretation": "At N = 1,113,616 the chi-square test is diagnostic only of any non-zero effect; the p-value is driven to near-zero by sample size alone. The effect-size statistics (Cramer's V and pairwise Cohen's h) are the meaningful quantities: V reports the aggregate strength of association, h the pairwise standardised effect size. Cohen's h thresholds: 0.2 = small, 0.5 = medium, 0.8 = large."
+  },
+  "cramers_v": 0.1017,
+  "pairwise_z_and_cohen_h": {
+    "permissive_vs_copyleft": {
+      "z": 60.166,
+      "p": 0.0,
+      "cohen_h": 0.1426
+    },
+    "permissive_vs_unknown": {
+      "z": 25.729,
+      "p": 0.0,
+      "cohen_h": 0.0685
+    },
+    "permissive_vs_unlicensed": {
+      "z": 100.16,
+      "p": 0.0,
+      "cohen_h": 0.3612
+    }
+  }
+}

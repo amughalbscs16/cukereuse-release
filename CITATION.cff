@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this tool or its corpus in academic work, please cite it as below."
+title: "cukereuse: Static, paraphrase-robust duplicate step detection for Cucumber/Gherkin"
+type: software
+authors:
+  - family-names: Mughal
+    given-names: Ali Hassaan
+    orcid: "https://orcid.org/0000-0000-0000-0000"  # TODO: replace with real ORCID
+repository-code: "https://github.com/amughalbscs16/cukereuse"
+license: Apache-2.0
+version: 0.1.0
+date-released: 2026-04-18
+preferred-citation:
+  type: article
+  title: "cukereuse: Static, paraphrase-robust duplicate step detection for Cucumber/Gherkin — a tool and empirical corpus analysis"
+  authors:
+    - family-names: Mughal
+      given-names: Ali Hassaan
+  year: 2026
+  # TODO: fill in once preprint is on arXiv
+  # doi: "10.48550/arXiv.XXXX.XXXXX"
+  # url: "https://arxiv.org/abs/XXXX.XXXXX"

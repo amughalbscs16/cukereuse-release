@@ -1,0 +1,61 @@
+{
+  "semantic": {
+    "threshold": 0.82,
+    "f1": {
+      "point": 0.9056,
+      "ci95_lo": 0.8862,
+      "ci95_hi": 0.9225
+    },
+    "precision": {
+      "point": 0.8275,
+      "ci95_lo": 0.7956,
+      "ci95_hi": 0.8562
+    },
+    "recall": {
+      "point": 1.0,
+      "ci95_lo": 1.0,
+      "ci95_hi": 1.0
+    }
+  },
+  "near_exact": {
+    "threshold": 0.8,
+    "f1": {
+      "point": 0.8624,
+      "ci95_lo": 0.8413,
+      "ci95_hi": 0.885
+    },
+    "precision": {
+      "point": 0.8271,
+      "ci95_lo": 0.7971,
+      "ci95_hi": 0.8579
+    },
+    "recall": {
+      "point": 0.9008,
+      "ci95_lo": 0.875,
+      "ci95_hi": 0.9256
+    }
+  },
+  "hybrid": {
+    "threshold": 0.82,
+    "f1": {
+      "point": 0.7234,
+      "ci95_lo": 0.69,
+      "ci95_hi": 0.7526
+    },
+    "precision": {
+      "point": 0.7724,
+      "ci95_lo": 0.7309,
+      "ci95_hi": 0.8109
+    },
+    "recall": {
+      "point": 0.6802,
+      "ci95_lo": 0.6377,
+      "ci95_hi": 0.7193
+    }
+  },
+  "meta": {
+    "n_boot": 1000,
+    "seed": 42,
+    "n_pairs": 1020
+  }
+}
