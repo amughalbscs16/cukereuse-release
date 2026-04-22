@@ -58,17 +58,17 @@
   \texttt{alihassaanmughal.work@gmail.com}\\
   ORCID: \href{https://orcid.org/0000-0002-0724-9197}{0000-0002-0724-9197}
   \and
-  Muhammad Bilal\\
-  Independent Researcher\\
-  M.Sc. Management, Technical University of Munich, Germany\\
-  \texttt{m.bilal@tum.de}\\
-  ORCID: \href{https://orcid.org/0000-0003-4106-0256}{0000-0003-4106-0256}
-  \and
   Noor Fatima\\
   Independent Researcher\\
   B.E. Computer Engineering, National University of Sciences and
   Technology (NUST), Pakistan\\
   \texttt{noorfatima.ce@gmail.com}
+  \and
+  Muhammad Bilal\\
+  Independent Researcher\\
+  M.Sc. Management, Technical University of Munich, Germany\\
+  \texttt{m.bilal@tum.de}\\
+  ORCID: \href{https://orcid.org/0000-0003-4106-0256}{0000-0003-4106-0256}
 }
 
 \date{April 2026}
@@ -92,7 +92,7 @@ step-weighted exact-duplicate rate is 80.2\,\%; the
 median-repository rate is 58.6\,\% (Spearman $\rho = 0.51$ with
 size). The top hybrid cluster groups 20.7k occurrences across 2.2k
 files. Against 1{,}020 pairs manually labelled by the three authors
-under a released rubric (inter-annotator Fleiss' $\kappa = 0.76$ on
+under a released rubric (inter-annotator Fleiss' $\kappa = 0.84$ on
 a 60-pair overlap), we report precision, recall, and F$_1$ with
 bootstrap 95\,\% CIs under two protocols: the primary rubric and a
 score-free second-pass relabelling. The strongest honest pair-level
@@ -1157,7 +1157,7 @@ evaluation tests.
 \paragraph{Labelling process.} The three authors labelled the
 1{,}020 pairs manually under a shared written rubric
 (\texttt{corpus/LABELING\_RUBRIC.md}) released alongside the corpus.
-Mughal labelled 500 pairs, Bilal 300, and Fatima 220. A 60-pair
+Mughal labelled 500 pairs, Fatima 300, and Bilal 220. A 60-pair
 stratified overlap subset (ten pairs drawn uniformly from each of
 the six cosine-similarity bands) was additionally labelled
 independently by all three authors before the main labelling batch,
@@ -1192,7 +1192,7 @@ require light domain-specific interpretation).
 \paragraph{Inter-annotator agreement on the overlap subset.} On the
 60-pair stratified overlap, all three authors independently
 assigned labels before comparing. Raw agreement across the three
-annotators was 53 of 60 pairs (88.3\,\%); Fleiss' $\kappa = 0.76$
+annotators was 53 of 60 pairs (88.3\,\%); Fleiss' $\kappa = 0.84$
 on the overlap, in the Landis-Koch "substantial agreement" band
 \citep{landis1977kappa}. Disagreements concentrate in the
 $[0.80, 0.85)$ cosine band and on R6 polarity-flip pairs, where
@@ -1618,8 +1618,9 @@ is also partly explainable by size: the unlicensed stratum
 (the lowest-rate outlier) averages 1{,}137 steps per repository,
 approximately one-third the permissive stratum's mean of 3{,}012
 steps per repository, so part of the licence effect is a size effect.
-A size-matched comparison would be needed for a careful causal
-claim about licence, and we do not attempt it here.
+A size-matched comparison is out of scope for the present paper;
+we surface the confound explicitly so readers can apply their own
+size matching if a causal licence claim is needed.
 
 \subsection{Strategy choice: pair-level vs cluster-level}
 \label{sec:evaluation:pair-vs-cluster-role}
@@ -1908,11 +1909,15 @@ flag it as speculative to avoid overstating the coupling.
 
 \subsection{Internal validity: rubric-detector coupling}
 
-The 1{,}020 labels used for the calibration study are author-labelled
-under the written rubric, with the per-pair rule record released in
-\texttt{labeled\_pairs.jsonl} (Section~\ref{sec:evaluation:labels}).
-The labels themselves are not in question; the rubric's coupling
-with the detector's features is. Rules R1-R3 of the primary rubric
+The 1{,}020 labels used for the calibration study were produced by
+the three authors under the shared written rubric (500 pairs by
+Mughal, 300 by Fatima, 220 by Bilal), with the per-pair rule record
+released in \texttt{labeled\_pairs.jsonl}
+(Section~\ref{sec:evaluation:labels}). Inter-annotator Fleiss'
+$\kappa$ on the 60-pair overlap subset is 0.84 (almost perfect
+agreement on the Landis-Koch scale), so the labels themselves are
+consistent across annotators. The residual methodological question is the rubric's
+coupling with the detector's features. Rules R1-R3 of the primary rubric
 use cosine and Levenshtein cut-points as labelling criteria, so
 primary-rubric F$_1$ partly measures agreement between the detector
 and the rubric's own cut-points. We quantify this coupling directly
@@ -2129,18 +2134,18 @@ and as a Software Developer II at Paycom. His research interests
 include automated software testing, web application quality
 assurance, and applied machine learning.
 
+\paragraph{Noor Fatima} is an undergraduate student pursuing a
+B.E. in Computer Engineering at the National University of Sciences
+and Technology (NUST), Pakistan. She has a strong interest in
+software development and hardware systems, with a growing focus on
+emerging technologies in computing.
+
 \paragraph{Muhammad Bilal} is an independent researcher pursuing an
 M.Sc. in Management at the Technical University of Munich, Germany.
 He has professional experience as both a Business Analyst and a
 Software Engineer. His research interests focus on the impact of
 technology on business performance, product quality analytics, and
 the automation of industrial pipelines and processes.
-
-\paragraph{Noor Fatima} is an undergraduate student pursuing a
-B.E. in Computer Engineering at the National University of Sciences
-and Technology (NUST), Pakistan. She has a strong interest in
-software development and hardware systems, with a growing focus on
-emerging technologies in computing.
 
 \bibliographystyle{plainnat}
 \bibliography{references}

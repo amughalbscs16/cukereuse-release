@@ -8,15 +8,15 @@ authors:
     orcid: "https://orcid.org/0000-0002-0724-9197"
     affiliation: "Independent Researcher; Applied MBA (Data Analytics), Texas Wesleyan University, USA"
     email: alihassaanmughal.work@gmail.com
+  - family-names: Fatima
+    given-names: Noor
+    affiliation: "Independent Researcher; B.E. Computer Engineering, National University of Sciences and Technology (NUST), Pakistan"
+    email: noorfatima.ce@gmail.com
   - family-names: Bilal
     given-names: Muhammad
     orcid: "https://orcid.org/0000-0003-4106-0256"
     affiliation: "Independent Researcher; M.Sc. Management, Technical University of Munich, Germany"
     email: m.bilal@tum.de
-  - family-names: Fatima
-    given-names: Noor
-    affiliation: "Independent Researcher; B.E. Computer Engineering, National University of Sciences and Technology (NUST), Pakistan"
-    email: noorfatima.ce@gmail.com
 repository-code: "https://github.com/amughalbscs16/cukereuse"
 license: Apache-2.0
 version: 0.1.0
@@ -28,9 +28,9 @@ preferred-citation:
     - family-names: Mughal
       given-names: Ali Hassaan
       orcid: "https://orcid.org/0000-0002-0724-9197"
+    - family-names: Fatima
+      given-names: Noor
     - family-names: Bilal
       given-names: Muhammad
       orcid: "https://orcid.org/0000-0003-4106-0256"
-    - family-names: Fatima
-      given-names: Noor
   year: 2026
