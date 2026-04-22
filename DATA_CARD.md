@@ -75,7 +75,7 @@ The permissive subset (approximately 57% of steps) is redistributable as raw con
 - **Text normalisation:** whitespace runs collapsed to single spaces; leading and trailing whitespace trimmed (`cukereuse.similarity.normalize`). No case-folding, Gherkin step text is case-sensitive in practice.
 - **Doc strings and data tables:** treated as step arguments and excluded from the `text` column. The `gherkin-official` AST exposes them on separate fields, which this schema drops.
 - **Scenario Outlines:** not unrolled. The outline body with `<placeholder>` tokens appears as one row, not one per Examples row.
-- **Labelling:** manual, two-author, against the shared rubric described in §2. Every label carries the rule that fired so rubric application is auditable without re-annotating.
+- **Labelling:** manual, three-author (500 by Mughal, 300 by Fatima, 220 by Bilal), against the shared rubric described in §2. A 60-pair stratified overlap subset was independently labelled by all three authors before the main batch, yielding Fleiss' κ = 0.84. Every label carries the rule that fired so rubric application is auditable without re-annotating.
 - **Raw data retention:** only pointers (`repo`, `commit_sha`, `file_path`) are kept. Raw feature files are reconstructed via `scripts/rehydrate.py`, which fetches `https://raw.githubusercontent.com/<repo>/<sha>/<path>`.
 
 ## 5. Uses
@@ -100,12 +100,12 @@ Restrictions:
 
 ## 6. Distribution
 
-- **Release channel:** GitHub repository at [amughalbscs16/cukereuse](https://github.com/amughalbscs16/cukereuse). Apache-2.0 for source code and analytical schema.
+- **Release channel:** GitHub repository at [amughalbscs16/cukereuse-release](https://github.com/amughalbscs16/cukereuse-release). Apache-2.0 for source code and analytical schema.
 - **Release bundle:** `repos.csv`, `clone_manifest.jsonl`, `steps.parquet`, `clusters_exact.parquet`, `clusters_hybrid.parquet`, `cluster_members_exact.parquet`, `cluster_members_hybrid.parquet`, `labeled_pairs.jsonl`, `LABELING_RUBRIC.md`, this datasheet, `README.md`. Total approximately 46 MB.
 - **What is NOT redistributed:** verbatim raw `.feature`-file bodies (approximately 418 MB of content that inherits copyleft obligations from its source repositories). `rehydrate.py` fetches each original file from its upstream repository on demand at the pinned commit SHA.
 
 ## 7. Maintenance
 
 - **Maintainers:** the authors of the `cukereuse` repository (Ali Hassaan Mughal, Noor Fatima, and Muhammad Bilal).
-- **Errata:** filed as GitHub issues on [amughalbscs16/cukereuse](https://github.com/amughalbscs16/cukereuse).
+- **Errata:** filed as GitHub issues on [amughalbscs16/cukereuse-release](https://github.com/amughalbscs16/cukereuse-release).
 - **Versioning:** a frozen snapshot corresponds to each paper version, tagged as a GitHub release (`v0.1`, `v0.2`, …). Supersession of earlier versions is documented in the release notes.
