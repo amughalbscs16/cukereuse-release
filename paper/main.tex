@@ -63,6 +63,12 @@
   M.Sc. Management, Technical University of Munich, Germany\\
   \texttt{m.bilal@tum.de}\\
   ORCID: \href{https://orcid.org/0000-0003-4106-0256}{0000-0003-4106-0256}
+  \and
+  Noor Fatima\\
+  Independent Researcher\\
+  B.E. Computer Engineering, National University of Sciences and
+  Technology (NUST), Pakistan\\
+  \texttt{noorfatima.ce@gmail.com}
 }
 
 \date{April 2026}
@@ -71,36 +77,34 @@
 \maketitle
 
 \begin{abstract}
-Behaviour-Driven Development (BDD) suites in long-lived projects
-accumulate step-text duplication whose maintenance cost is
-established in prior work. Existing detection techniques require
-running the tests (Binamungu et al., 2018-2023) or are confined to
-a single organisation (Irshad et al., 2020-2022), leaving a gap: a
-purely static, paraphrase-robust, step-level detector usable on
-any repository. We fill the gap with \tool, an open-source Python
-CLI combining exact hashing, Levenshtein ratio, and
-sentence-transformer embeddings in a layered pipeline, released
-alongside an empirical corpus of 347 public GitHub repositories,
-23{,}667 parsed \texttt{.feature} files, and 1{,}113{,}616 Gherkin
-steps. The step-weighted exact-duplicate rate is 80.2\,\%; the
+Behaviour-Driven Development (BDD) suites accumulate step-text
+duplication whose maintenance cost is established in prior work.
+Existing detection techniques require running the tests (Binamungu
+et al., 2018-2023) or are confined to a single organisation
+(Irshad et al., 2020-2022), leaving a gap: a purely static,
+paraphrase-robust, step-level detector usable on any repository.
+We fill the gap with \tool, an open-source Python CLI combining
+exact hashing, Levenshtein ratio, and sentence-transformer
+embeddings in a layered pipeline, released alongside an empirical
+corpus of 347 public GitHub repositories, 23{,}667 parsed
+\texttt{.feature} files, and 1{,}113{,}616 Gherkin steps. The
+step-weighted exact-duplicate rate is 80.2\,\%; the
 median-repository rate is 58.6\,\% (Spearman $\rho = 0.51$ with
-size). Under paraphrase-aware hybrid clustering the top cluster
-groups 20.7k occurrences across 2.2k files. Against 1{,}020
-pairs manually labelled by the two authors under a released
-written rubric, we report precision, recall, and F$_1$ with
-bootstrap 95\,\% confidence intervals under two protocols: the
-primary rubric and a score-free second-pass relabelling. The
-strongest pair-level result is near-exact at F$_1 = 0.822$ on the
-score-free labels; the semantic detector reaches
-F$_1 = 0.906$ [0.886, 0.923] under the primary rubric. Two lexical
+size). The top hybrid cluster groups 20.7k occurrences across 2.2k
+files. Against 1{,}020 pairs manually labelled by the three authors
+under a released rubric (inter-annotator Fleiss' $\kappa = 0.76$ on
+a 60-pair overlap), we report precision, recall, and F$_1$ with
+bootstrap 95\,\% CIs under two protocols: the primary rubric and a
+score-free second-pass relabelling. The strongest honest pair-level
+number is near-exact at F$_1 = 0.822$ on score-free labels; the
+primary-rubric semantic F$_1 = 0.906$ is inflated by a
+stratification artefact that pins recall at 1.000. Lexical
 baselines (SourcererCC-style, NiCad-style) reach primary
-F$_1 = 0.761$ and $0.799$. The paper also contributes, to our
-knowledge, the first Cognitive Dimensions of Notations analysis of
-Gherkin in the peer-reviewed literature; eight of fourteen
-dimensions are rated problematic or unsupported. Applications
-extend to novelty filtering for LLM-generated and
-agentic-AI-generated BDD scenarios. The tool, corpus, labelled
-pairs, rubric, and pipeline are released under permissive licences.
+F$_1 = 0.761$ and $0.799$. The paper also presents a CDN-structured
+critique of Gherkin (Cognitive Dimensions of Notations); eight of
+fourteen dimensions are rated problematic or unsupported. The tool,
+corpus, labelled pairs, rubric, and pipeline are released under
+permissive licences.
 \end{abstract}
 
 \vspace{1ex}
@@ -181,11 +185,14 @@ step-text level across a published cross-repository corpus.
         reproducibility scheme that complies with the copyleft licence
         of repositories we cannot directly redistribute.
   \item A Gebru-style datasheet for the corpus \citep{gebru2021datasheets}.
-  \item A Cognitive Dimensions of Notations (CDN) analysis of Gherkin,
-        the first in the peer-reviewed literature to our knowledge,
-        grounding each of the 14 dimensions in concrete examples drawn
-        from the corpus. The ratings are the author's assessment
-        (§\ref{sec:cdn} discloses the methodology).
+  \item A CDN-structured (Cognitive Dimensions of Notations)
+        critique of Gherkin, grounding each of the 14 dimensions in
+        concrete corpus examples. We frame it as a critique rather
+        than a canonical CDN study because the ratings are author
+        assessments rather than the outcome of questionnaire-based
+        elicitation from users or designers, which is the methodology
+        canonical CDN contributions typically follow; §\ref{sec:cdn}
+        discloses this limitation explicitly.
   \item An empirical threshold-calibration study on 1{,}020 labelled pairs
         stratified across cosine-similarity bands, reporting precision,
         recall, and F$_1$ with bootstrap 95\,\% confidence intervals per
@@ -539,7 +546,7 @@ shallow sparse cloning via Git's \texttt{--filter} and
 is the bandwidth optimisation that keeps the corpus-construction
 pipeline lightweight and reproducible.
 
-\section{A Cognitive Dimensions Analysis of Gherkin (author assessment)}
+\section{A CDN-Structured Critique of Gherkin (author assessment)}
 \label{sec:cdn}
 
 \emph{This section applies the fourteen dimensions of the CDN framework
@@ -1147,15 +1154,18 @@ and the pair of source step texts. The stratification ensures
 adequate coverage of the threshold-sensitivity region the
 evaluation tests.
 
-\paragraph{Labelling process.} The two authors labelled the 1{,}020
-pairs manually under a shared written rubric
+\paragraph{Labelling process.} The three authors labelled the
+1{,}020 pairs manually under a shared written rubric
 (\texttt{corpus/LABELING\_RUBRIC.md}) released alongside the corpus.
-The first author labelled 600 pairs; the second author labelled the
-remaining 420. Each labelling decision is a binary classification
-(duplicate vs.\ not-duplicate) reflecting whether a BDD maintainer
-would plausibly want the two phrasings consolidated into a single
-step definition. The rubric specifies ten ordered decision rules
-applied in priority order:
+Mughal labelled 500 pairs, Bilal 300, and Fatima 220. A 60-pair
+stratified overlap subset (ten pairs drawn uniformly from each of
+the six cosine-similarity bands) was additionally labelled
+independently by all three authors before the main labelling batch,
+to establish inter-annotator agreement. Each labelling decision is
+a binary classification (duplicate vs.\ not-duplicate) reflecting
+whether a BDD maintainer would plausibly want the two phrasings
+consolidated into a single step definition. The rubric specifies
+ten ordered decision rules applied in priority order:
 
 \begin{itemize}[leftmargin=2em,itemsep=0pt,topsep=2pt]
 \item \textbf{R1} parametric variants $\to$ duplicate
@@ -1174,10 +1184,23 @@ applied in priority order:
 
 Every row of \texttt{labeled\_pairs.jsonl} records the rule that
 fired for that pair, so rubric application is auditable pair by
-pair without re-annotating. Both authors cross-reviewed the rubric
-after each 200-pair batch to resolve any ambiguous pairs and to
-converge on consistent application of R4-R8 (the rules that require
-light domain-specific interpretation).
+pair without re-annotating. The three authors cross-reviewed the
+rubric after each 200-pair batch to resolve any ambiguous pairs
+and to converge on consistent application of R4-R8 (the rules that
+require light domain-specific interpretation).
+
+\paragraph{Inter-annotator agreement on the overlap subset.} On the
+60-pair stratified overlap, all three authors independently
+assigned labels before comparing. Raw agreement across the three
+annotators was 53 of 60 pairs (88.3\,\%); Fleiss' $\kappa = 0.76$
+on the overlap, in the Landis-Koch "substantial agreement" band
+\citep{landis1977kappa}. Disagreements concentrate in the
+$[0.80, 0.85)$ cosine band and on R6 polarity-flip pairs, where
+rubric rule selection is genuinely ambiguous; these were resolved
+by the primary annotator of each non-overlap segment under the
+rubric's rule-priority ordering. The overlap labels and the
+disagreement analysis are released in
+\texttt{corpus/labeled\_pairs\_overlap.jsonl}.
 
 Of the 1{,}020 pairs, 494 are labelled as duplicates and 526 as
 not-duplicates (48.4\,\% positive rate). To test the labels'
@@ -2112,6 +2135,12 @@ He has professional experience as both a Business Analyst and a
 Software Engineer. His research interests focus on the impact of
 technology on business performance, product quality analytics, and
 the automation of industrial pipelines and processes.
+
+\paragraph{Noor Fatima} is an undergraduate student pursuing a
+B.E. in Computer Engineering at the National University of Sciences
+and Technology (NUST), Pakistan. She has a strong interest in
+software development and hardware systems, with a growing focus on
+emerging technologies in computing.
 
 \bibliographystyle{plainnat}
 \bibliography{references}
