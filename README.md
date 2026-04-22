@@ -1,112 +1,172 @@
-# cukereuse
+# cukereuse: duplicate step detection for Cucumber and Gherkin
 
-**Static, paraphrase-robust duplicate step detection for Cucumber/Gherkin `.feature` files.**
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](pyproject.toml)
+[![Status](https://img.shields.io/badge/status-research_release-brightgreen.svg)](paper/main.pdf)
 
-Detects duplicate and near-duplicate step definitions using a layered pipeline — exact hash → normalised Levenshtein → sentence-transformer (SBERT `all-MiniLM-L6-v2`) embeddings → hybrid cluster collapse. No test execution required; works on any repository in any language binding (Java/Cucumber-JVM, Python/behave/pytest-bdd, Ruby/Cucumber-Ruby, JS/cucumber-js, .NET/SpecFlow, Behat/PHP).
+Static detector for duplicate and near-duplicate step text in `.feature` files. Works across Cucumber-JVM (Java), behave and pytest-bdd (Python), Cucumber-Ruby, cucumber-js, SpecFlow (.NET), and Behat (PHP). No test execution required. Runs on any repository.
 
-Released alongside an empirical corpus of 347 public GitHub repositories, approximately 23.7k parsed `.feature` files and 1.11M Gherkin steps, a 1,020-pair labelled calibration set with a written rubric, and a Cognitive Dimensions of Notations analysis of Gherkin. The full empirical argument is in [`paper/main.pdf`](paper/main.pdf).
+Ships with:
+- a CLI tool (`cukereuse`)
+- a corpus of 1.11M Gherkin steps from 347 public GitHub repositories
+- a 1,020-pair labelled calibration set with a written rubric
+- a peer-review-ready research paper ([`paper/main.pdf`](paper/main.pdf))
+
+## Who this is for
+
+- **Maintainers of large BDD suites** who want to find and consolidate duplicate step text before it drifts further.
+- **Platform and DevEx teams** who want a pre-commit hook that warns when a new step is the 200th parametric variant of an existing one.
+- **Researchers** working on test-artefact quality, clone detection on near-natural-language text, or BDD-specific tooling.
+- **Test leads** evaluating the duplication profile of an inherited codebase.
+
+## What it does in one example
+
+Given a `features/` directory, `cukereuse` finds that a phrasing like
+
+    the response status is 200 OK
+
+and its paraphrases (`status 200`, `the response status should be "200"`, `I should get a 200 response code`) appear together in tens of thousands of places. The HTML report groups them, shows every file and line, and names a canonical phrasing to consolidate toward.
+
+On the paper's public corpus, the top cluster groups **20,737 occurrences across 2,245 files in 43 repositories**. The corpus-wide step-weighted duplication rate is **80.2%**; the median repository's rate is **52.5%**.
 
 ## Install
 
 ```bash
 git clone https://github.com/amughalbscs16/cukereuse.git
 cd cukereuse
-uv sync                  # uses pyproject.toml; torch is pulled from the CPU index
+uv sync
 uv run cukereuse --help
 ```
 
-## CLI
+Requires Python 3.10+. Torch is pulled from the CPU index so no GPU is needed.
+
+## Quickstart
 
 ```bash
-# Summary statistics over a directory of feature files
+# Summary stats over a directory of feature files
 cukereuse stats ./features
 
-# Detect duplicates — four strategies
-cukereuse find-duplicates ./features                                    # default: exact hash
-cukereuse find-duplicates ./features --strategy near-exact              # + Levenshtein
-cukereuse find-duplicates ./features --strategy semantic                # + SBERT
-cukereuse find-duplicates ./features --strategy hybrid                  # cos AND Lev-band
+# Find exact duplicates (fastest, deterministic)
+cukereuse find-duplicates ./features
 
-# Run the full pipeline (analysis + top clusters)
-cukereuse analyze ./features --strategy hybrid --output results.json
+# Paraphrase-aware duplicates (recommended for cluster reports)
+cukereuse find-duplicates ./features --strategy hybrid
+
+# Full analysis, HTML + JSON output
+cukereuse analyze ./features --strategy hybrid --output report.html
 ```
 
-Every invocation writes an HTML report with inline CSS, collapsible cluster cards, and file:line links, plus a stable-schema JSON sibling for downstream tooling.
+Every run produces a browsable HTML report (inline CSS, collapsible cluster cards, file:line links) and a stable-schema JSON file for downstream pipelines.
 
-## Strategies and when to use each
+## Strategy selection
 
-| Operation | Recommended strategy | Default threshold |
-|-----------|---------------------|-------------------|
-| Exact-duplicate enumeration        | `exact` (BLAKE2b)     | — |
-| Pair-level duplicate classification| `near-exact` (Lev)    | 0.80 (primary) / 0.71 (score-free) |
-| Paraphrase-aware cluster collapse  | `hybrid` (cos ∧ Lev-band) | cos 0.82, Lev ∈ [0.3, 0.95] |
-| Semantic pair classification       | `semantic` (SBERT)    | cos 0.82 |
+| Task | Strategy | Threshold |
+|------|----------|-----------|
+| Byte-identical enumeration | `exact` (BLAKE2b hash) | n/a |
+| Pair classification (is this pair a duplicate?) | `near-exact` (Levenshtein) | 0.80 |
+| Semantic pair classification | `semantic` (SBERT cosine) | 0.82 |
+| Project-wide paraphrase-aware cluster report | `hybrid` (cos + Lev band) | cos 0.82, Lev 0.30–0.95 |
 
-Thresholds are calibrated against 1,020 labelled pairs under two independent evaluation protocols (primary rubric and a score-free second-pass relabelling). Calibration tables, bootstrap 95% confidence intervals, and the pair-vs-cluster threshold discussion are in §7 of the paper.
+Thresholds are calibrated against 1,020 labelled pairs under two evaluation protocols (primary rubric and a score-free second-pass relabelling). Full numbers, bootstrap confidence intervals, and the pair-vs-cluster threshold analysis are in Section 7 of the paper.
 
-## Corpus
+The paper's recommendation: **near-exact** is the strongest pair-level classifier (F₁ = 0.822 on score-free labels, F₁ = 0.862 on the primary rubric). **Hybrid** is the recommended strategy for building project-wide cluster reports because its Levenshtein band prevents transitive chaining that pure semantic clustering suffers from.
 
-The `corpus/` directory contains the full mined dataset as parquet files (~46 MB combined):
+## What's in the corpus
+
+The `corpus/` directory ships every analytical artefact as parquet or JSONL (46 MB combined):
 
 | File | Content |
 |------|---------|
-| `steps.parquet`                    | 1,113,616 rows, one per step; columns include `repo`, `commit_sha`, `file_path`, `line`, `keyword`, `text`, `license_spdx`, `license_class`. |
-| `clusters_exact.parquet`           | 82,545 exact-duplicate clusters. |
-| `clusters_hybrid.parquet`          | 65,242 hybrid paraphrase-aware clusters. |
-| `cluster_members_*.parquet`        | Per-cluster membership (which steps belong to which cluster). |
-| `labeled_pairs.jsonl`              | 1,020 labelled pairs released with per-pair rule trail. |
-| `LABELING_RUBRIC.md`               | The written rubric: 10 ordered decision rules. |
-| `repos.csv`, `clone_manifest.jsonl`| Sample manifest with pinned commit SHAs. |
+| `steps.parquet` | 1,113,616 rows, one per step, with `repo`, `commit_sha`, `file_path`, `line`, `keyword`, `text`, `license_spdx`, `license_class`. |
+| `clusters_exact.parquet` | 82,545 exact-duplicate clusters. |
+| `clusters_hybrid.parquet` | 65,242 hybrid paraphrase-aware clusters. |
+| `cluster_members_*.parquet` | Per-cluster membership. |
+| `labeled_pairs.jsonl` | 1,020 labelled pairs with the fired rubric rule per pair. |
+| `LABELING_RUBRIC.md` | The 10-rule written rubric the authors used. |
+| `repos.csv`, `clone_manifest.jsonl` | Sample manifest with pinned commit SHAs. |
 
-The verbatim raw `.feature`-file bodies are **not redistributed** here (approximately 418 MB of content inheriting copyleft obligations from their source repositories). `scripts/rehydrate.py` reconstructs them on demand from the pinned commit SHAs:
+Raw `.feature`-file bodies are not redistributed (they inherit copyleft obligations from their source repositories). `rehydrate.py` fetches each file on demand from its upstream commit SHA:
 
 ```bash
 uv run python scripts/rehydrate.py
 ```
 
-## Reproducing the corpus pipeline
+## Reproducing the pipeline
 
 ```bash
-# 1. Discover repositories with .feature files via GitHub REST Search
+# Mine GitHub for .feature repositories
 uv run python scripts/mine_github.py --min-stars 10
 
-# 2. Shallow + sparse clone the .feature files only
+# Sparse-clone only .feature files
 uv run python scripts/clone_features.py --workers 16
 
-# 3. Parse every feature into steps.parquet
+# Parse into steps.parquet
 uv run python scripts/build_corpus.py --workers 8
 
-# 4. Run the chosen strategy, emit clusters.parquet + HTML/JSON reports
+# Run the analysis
 uv run python scripts/run_analysis.py --strategy hybrid
 
-# 5. Sample and label pairs for calibration
+# Sample and label pairs
 uv run python scripts/sample_pairs.py
 uv run python scripts/write_labels.py
 
-# 6. Reproduce the revision analyses (baselines, bootstrap CIs, score-free relabel,
-#    licence chi-square, size-vs-duplication scatter)
+# Calibration analyses (baselines, CIs, score-free, licence chi-square, size scatter)
 uv run python scripts/revision_analyses.py
 
-# 7. Regenerate all paper figures
+# Regenerate paper figures
 uv run python scripts/generate_figures.py
 ```
 
-Mining is resumable — API responses are cached under `scripts/mine_cache/`. Re-runs skip completed work.
+Mining is resumable. API responses cache under `scripts/mine_cache/`; re-runs skip completed work.
+
+## Key numbers
+
+These are the citable headline numbers from the paper.
+
+- **Corpus:** 347 public GitHub repositories, 23,667 parsed `.feature` files, 1,113,616 Gherkin steps.
+- **Step-weighted exact-duplicate rate:** 80.2%.
+- **Median-repository duplication rate:** 52.5%.
+- **Spearman ρ between repository size and duplication rate:** 0.508.
+- **Top cluster (hybrid):** `the response status is 200 OK`, 20,737 occurrences across 2,245 files, 43 repositories.
+- **Best pair-level detector:** near-exact (Levenshtein), F₁ = 0.822 under score-free evaluation, F₁ = 0.862 under the primary rubric.
+- **Circularity cost (primary-vs-score-free inter-protocol Cohen's κ):** 0.47.
+- **Lexical baselines (SourcererCC-style token Jaccard, NiCad-style TF-IDF char n-gram):** F₁ = 0.761 and 0.799.
+- **Labelled benchmark:** 1,020 pairs manually labelled by the authors (600 by the first author, 420 by the second) under a released written rubric.
+- **CDN analysis of Gherkin:** 8 of 14 dimensions rated problematic or unsupported.
 
 ## Paper
 
-The full research argument, including the Cognitive Dimensions of Notations analysis of Gherkin, the dual-protocol evaluation methodology, and the repository-size confound discussion, is in [`paper/main.pdf`](paper/main.pdf). The LaTeX source and `references.bib` are in the same directory.
+The peer-review-ready paper is [`paper/main.pdf`](paper/main.pdf). LaTeX source and `references.bib` are in the same directory. Covers:
 
-## Positioning
-
-The paper is **orthogonal to** execution-based scenario-duplicate detection (Binamungu et al., Manchester, 2018-2023) — different analysis level (step-text vocabulary clustering versus scenario-level behavioural equivalence). A production BDD toolchain could productively deploy both. The corpus is, to our knowledge, the largest released cross-organisational BDD corpus; the 1,020-pair calibration set and rubric are released alongside for independent replication.
-
-## Licence
-
-Apache-2.0 for source code and the analytical schema. See [LICENSE](LICENSE).
-
-The corpus parquet rows carry a `license_spdx` column per step so that downstream users can filter by upstream licence class (`permissive`, `copyleft`, `unknown`, `unlicensed`). The verbatim raw `.feature` files are not redistributed here; their licences are preserved at each source repository and `rehydrate.py` fetches from that source.
+- Corpus construction and a size-vs-duplication analysis.
+- Four detection strategies with bootstrap-CI calibration under two evaluation protocols.
+- Two lexical baselines (SourcererCC-style, NiCad-style) on the same benchmark.
+- A Cognitive Dimensions of Notations (CDN) analysis of Gherkin, to our knowledge the first in the peer-reviewed literature.
+- Failure-mode breakdown (polarity flips, HTTP-verb mismatch, framework-keyword semantic shift).
 
 ## Citation
 
-See [CITATION.cff](CITATION.cff).
+If you use the tool, the corpus, or the labelled benchmark, please cite:
+
+```bibtex
+@article{mughal2026cukereuse,
+  author  = {Mughal, Ali Hassaan and Bilal, Muhammad},
+  title   = {cukereuse: Static, paraphrase-robust duplicate step detection for {Cucumber}/{Gherkin}, with an empirical corpus and a {Cognitive} {Dimensions} analysis},
+  year    = {2026},
+  note    = {arXiv preprint and GitHub release},
+  url     = {https://github.com/amughalbscs16/cukereuse}
+}
+```
+
+`CITATION.cff` mirrors the same metadata for GitHub's citation widget.
+
+## Licence
+
+Apache-2.0 for the source code and analytical schema. See [LICENSE](LICENSE).
+
+Corpus parquet rows carry a per-step `license_spdx` column so downstream work can filter by upstream licence class (`permissive`, `copyleft`, `unknown`, `unlicensed`). Raw `.feature` files are not redistributed here and remain under their source-repository licences; `rehydrate.py` fetches them on demand.
+
+## Authors
+
+- **Ali Hassaan Mughal**, Independent Researcher, Applied MBA (Data Analytics), Texas Wesleyan University. ORCID [0000-0002-0724-9197](https://orcid.org/0000-0002-0724-9197). `alihassaanmughal.work@gmail.com`.
+- **Muhammad Bilal**, Independent Researcher, M.Sc. Management, Technical University of Munich. ORCID [0000-0003-4106-0256](https://orcid.org/0000-0003-4106-0256). `m.bilal@tum.de`.
