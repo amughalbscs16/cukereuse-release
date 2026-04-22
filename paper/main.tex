@@ -32,7 +32,7 @@
 
 \newcommand{\tool}{\textsc{cukereuse}\xspace}
 
-\title{\tool: Static, Paraphrase-Robust Duplicate Step Detection for Cucumber/Gherkin, with an Empirical Corpus and a Cognitive Dimensions Analysis}
+\title{Finding Duplicates in 1.1M BDD Steps: \tool, a Paraphrase-Robust Static Detector for Cucumber and Gherkin}
 
 \author{%
   Ali Hassaan Mughal\\
@@ -91,14 +91,20 @@ Gherkin in the peer-reviewed literature, an author assessment
 grounded in corpus evidence; eight of fourteen dimensions are rated
 problematic or unsupported. The tool, corpus manifest, labelled
 pairs, rubric, and analysis pipeline are released under permissive
-licences.
+licences. Applications extend to novelty filtering for
+LLM-generated and agentic-AI-generated BDD scenarios, a direction
+we flag in future work.
 \end{abstract}
 
 \vspace{1ex}
-\noindent\textbf{Keywords:} Behaviour-Driven Development; Cucumber; Gherkin;
-duplicate detection; clone detection; sentence-transformer; empirical
-software engineering; cognitive dimensions of notations; software
-maintenance; test specification.
+\noindent\textbf{Keywords:} Behaviour-Driven Development; BDD;
+Cucumber; Gherkin; duplicate detection; clone detection;
+paraphrase-robust matching; static analysis; sentence-transformer;
+semantic similarity; neural clone detection; test automation;
+AI-assisted testing; LLM evaluation; agentic AI (future work
+application); empirical software engineering; mining software
+repositories; cognitive dimensions of notations; software
+maintenance; test refactoring; test specification; software quality.
 
 \section{Introduction}
 \label{sec:introduction}
@@ -1990,6 +1996,18 @@ pursue; we list them briefly rather than committing the present
 authors to specific roadmaps.
 
 \begin{itemize}[leftmargin=2em]
+  \item \textbf{Novelty filtering for LLM-generated and
+        agentic-AI-generated BDD scenarios.} As large language
+        models and autonomous test-generation agents
+        \citep{mughal2025rlagent} produce scenarios that are
+        subsequently committed to real codebases, a static
+        paraphrase-aware detector that flags generated scenarios as
+        near-duplicates of pre-existing ones becomes a natural
+        quality gate. The cukereuse hybrid detector provides the
+        primitive without requiring execution of the generated
+        scenarios, composes upstream as a guidance vocabulary for
+        the generator's action space, and composes downstream as a
+        post-generation novelty filter.
   \item \textbf{Larger corpus via BigQuery.} Replacing the REST
         Search discovery path with a BigQuery query over
         \texttt{bigquery-public-data.github\_repos} lifts the
