@@ -82,7 +82,7 @@ The permissive subset (approximately 57% of steps) is redistributable as raw con
 
 Supported tasks for v0.1:
 
-- Threshold calibration for the `cukereuse` duplicate detector (paper §7).
+- Threshold calibration for the `cukereuse` duplicate detector (see the accompanying paper, forthcoming).
 - Empirical baseline for "what fraction of real BDD step text is duplicated?" (80.2% step-weighted, 58.6% median-repository).
 - Replication of the bootstrap-CI calibration, the score-free relabelling protocol, the licence-stratified analysis, and the size-vs-duplication scatter.
 
@@ -91,7 +91,7 @@ Additional tasks the corpus supports:
 - Cross-ecosystem BDD practice analysis (Java/Cucumber-JVM, Ruby/Cucumber, PHP/Behat, Python/behave, JS/cucumber-js).
 - Pretraining or evaluation of language models on test-specification text.
 - Research into automatic test refactoring, step-definition generation, tag taxonomies.
-- Cognitive Dimensions of Notations analysis of BDD notations, grounded in concrete corpus examples (paper §4).
+- Cognitive Dimensions of Notations analysis of BDD notations, grounded in concrete corpus examples (see the accompanying paper, forthcoming).
 
 Restrictions:
 
