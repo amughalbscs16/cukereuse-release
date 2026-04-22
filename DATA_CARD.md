@@ -9,7 +9,7 @@ Follows the template from Gebru et al., *Datasheets for Datasets*, CACM 64(12), 
 ## 1. Motivation
 
 - **For what purpose was the dataset created?** To enable empirical study of duplicate and near-duplicate step text in public Cucumber/Gherkin `.feature` files, and to calibrate and evaluate the `cukereuse` static duplicate detector.
-- **Who created the dataset and who funds it?** Ali Hassaan Mughal (Texas Wesleyan University) and Muhammad Bilal (Technical University of Munich). No external funding.
+- **Who created the dataset and who funds it?** Ali Hassaan Mughal (Texas Wesleyan University), Muhammad Bilal (Technical University of Munich), and Noor Fatima (National University of Sciences and Technology, Pakistan). No external funding.
 - **Any other comments?** The corpus is a pointer-based release. Derived analytical metadata (parquet, JSONL) is redistributed under Apache-2.0. Raw `.feature`-file bodies are not redistributed; they are reconstructed on demand from pinned commit SHAs and remain under each source repository's licence.
 
 ## 2. Composition
@@ -25,7 +25,7 @@ Follows the template from Gebru et al., *Datasheets for Datasets*, CACM 64(12), 
   - `is_background`, `is_outline` (booleans).
   - `license_spdx` (SPDX identifier from GitHub's licence endpoint).
   - `license_class` (`permissive` / `copyleft` / `unknown` / `unlicensed`).
-- **Is there a label or target?** `corpus/labeled_pairs.jsonl` contains 1,020 labelled pairs (494 duplicates, 526 not-duplicates) stratified across six cosine-similarity bands. Labels were produced manually by the two authors (600 pairs by Ali Hassaan Mughal, 420 by Muhammad Bilal) under a shared written rubric in `corpus/LABELING_RUBRIC.md` (ten ordered decision rules). Every row carries a `labeler` field and a `rule` field recording which rubric clause fired, so rubric application is auditable pair by pair. Both authors cross-reviewed boundary cases after each 200-pair batch to converge on consistent R4-R8 application.
+- **Is there a label or target?** `corpus/labeled_pairs.jsonl` contains 1,020 labelled pairs (494 duplicates, 526 not-duplicates) stratified across six cosine-similarity bands. Labels were produced manually by the three authors (500 pairs by Ali Hassaan Mughal, 300 by Muhammad Bilal, 220 by Noor Fatima) under a shared written rubric in `corpus/LABELING_RUBRIC.md` (ten ordered decision rules). Every row carries a `labeler` field and a `rule` field recording which rubric clause fired, so rubric application is auditable pair by pair. All three authors cross-reviewed boundary cases after each 200-pair batch to converge on consistent R4-R8 application. A 60-pair stratified overlap subset was independently labelled by all three authors before the main batch, yielding Fleiss' $\kappa = 0.76$ (substantial agreement, Landis-Koch).
 - **Are there recommended data splits?** No built-in splits. Consumers should construct splits for their research use (train/test, by licence class, by repository size).
 - **Are there errors, noise, or redundancies?** Expected:
   - Duplication is the subject of study. 80.2% of steps are byte-identical duplicates of another step after whitespace normalisation; this is the central empirical phenomenon.
@@ -106,6 +106,6 @@ Restrictions:
 
 ## 7. Maintenance
 
-- **Maintainers:** the authors of the `cukereuse` repository (Ali Hassaan Mughal and Muhammad Bilal).
+- **Maintainers:** the authors of the `cukereuse` repository (Ali Hassaan Mughal, Muhammad Bilal, and Noor Fatima).
 - **Errata:** filed as GitHub issues on [amughalbscs16/cukereuse](https://github.com/amughalbscs16/cukereuse).
 - **Versioning:** a frozen snapshot corresponds to each paper version, tagged as a GitHub release (`v0.1`, `v0.2`, …). Supersession of earlier versions is documented in the release notes.
