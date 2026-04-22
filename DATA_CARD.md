@@ -83,7 +83,7 @@ The permissive subset (approximately 57% of steps) is redistributable as raw con
 Supported tasks for v0.1:
 
 - Threshold calibration for the `cukereuse` duplicate detector (paper §7).
-- Empirical baseline for "what fraction of real BDD step text is duplicated?" (80.2% step-weighted, 52.5% median-repository).
+- Empirical baseline for "what fraction of real BDD step text is duplicated?" (80.2% step-weighted, 58.6% median-repository).
 - Replication of the bootstrap-CI calibration, the score-free relabelling protocol, the licence-stratified analysis, and the size-vs-duplication scatter.
 
 Additional tasks the corpus supports:
