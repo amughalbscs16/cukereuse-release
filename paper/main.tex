@@ -479,7 +479,7 @@ transformations of BDD scenarios for maintainability. Pereira et al.\
 \citep{scandaroli2019bdd} study practitioners' experience with BDD
 adoption. None surface duplicate detection at corpus scale.
 
-\subsection{Connections to the author's prior work on BDD and API testing}
+\subsection{Relationship to adjacent prior work in the same research line}
 \label{sec:related:programme}
 
 The present author has three adjacent prior papers.
@@ -498,9 +498,10 @@ section stays focused on the comparative literature.
 
 \subsection{Clone detection beyond BDD}
 
-The clone-detection literature is surveyed exhaustively elsewhere
-\citep{roy2007survey,rattan2013clonesurvey,kim2018cloneworld}. Four
-tools anchor the comparison space: CCFinder's token-stream
+Comprehensive surveys of the clone-detection literature are
+available in \citet{roy2007survey}, \citet{rattan2013clonesurvey},
+and \citet{kim2018cloneworld}; we summarise the most directly
+comparable points here. Four tools anchor the comparison space: CCFinder's token-stream
 approach \citep{kamiya2002ccfinder}, DECKARD's AST-based clustering
 \citep{jiang2007deckard}, SourcererCC's partial-index scale-out
 \citep{sajnani2016sourcerercc}, and NiCad's normalise-and-compare
@@ -1352,6 +1353,19 @@ token-overlap positive rules (P1-P4); see
 Section~\ref{sec:evaluation:score-free}.
 \end{table}
 
+\paragraph{Recall = 1.000 is a stratification artefact, not a
+detector property.} Before reading the F$_1$ numbers it is worth
+noting that semantic's recall of 1.000 under the primary rubric
+is guaranteed by the labelling-stratification construction:
+every primary-rubric positive is produced by rules R1-R3, which
+require cosine $\geq 0.80$, and the detector's threshold of 0.82
+sits inside the same band, so no primary-rubric positive can be
+missed. This pins recall at 1.000 and pulls semantic's F$_1$ upward
+by definition. The discriminating numbers are precision and the
+score-free F$_1$; the 0.906 primary-rubric F$_1$ for semantic is
+included for completeness but is not the headline we recommend
+citing.
+
 The strategy ranking visible in Table~\ref{tab:calibration} flips
 between the two protocols. Near-exact beats
 semantic against score-free labels (F$_1$ 0.822 versus 0.772),
@@ -1661,9 +1675,12 @@ vocabulary canonical-picker          & hybrid + canonical-phrasing rule & Sectio
 \end{table}
 
 Pair-level F$_1$ and cluster-level chaining behaviour are
-different quantities and peak at different thresholds. On a
-12-repository scout sample we observe the following transition in
-single-linkage chaining as the Levenshtein threshold varies:
+different quantities and peak at different thresholds. We ran a
+scout sweep on a 12-repository subsample drawn from the 347-repo
+corpus by random sampling, stratified across licence class, before
+the full pipeline was executed. On this scout sample we observe
+the following transition in single-linkage chaining as the
+Levenshtein threshold varies:
 
 \begin{table}[h]
 \centering
@@ -1800,7 +1817,9 @@ hybrid      &
 
 \subsection{Intra-repository versus cross-repository reuse}
 
-Our 12-repository scout sample surfaced a striking asymmetry: within
+The 12-repository scout subsample introduced in
+Section~\ref{sec:evaluation:pair-vs-cluster-role} surfaced a
+striking asymmetry: within
 any single repository, exact duplication rates run 44\,\%--99\,\%, but
 across repositories only two step texts were shared between projects
 (both within the Behat sister-library family:
@@ -1865,7 +1884,7 @@ the present tool and are listed in Section~\ref{sec:future}.
 None of these interventions requires a new test runtime, they are
 static tooling built on the Gherkin notation as it stands.
 
-\subsection{Integration with the author's adjacent work}
+\subsection{Integration points with adjacent BDD-testing tooling}
 \label{sec:discussion:integration}
 
 Two concrete and one speculative point of integration exist with
