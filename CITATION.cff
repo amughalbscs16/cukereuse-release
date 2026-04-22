@@ -5,18 +5,27 @@ type: software
 authors:
   - family-names: Mughal
     given-names: Ali Hassaan
-    orcid: "https://orcid.org/0000-0000-0000-0000"  # TODO: replace with real ORCID
+    orcid: "https://orcid.org/0000-0002-0724-9197"
+    affiliation: "Independent Researcher; Applied MBA (Data Analytics), Texas Wesleyan University, USA"
+    email: alihassaanmughal.work@gmail.com
+  - family-names: Bilal
+    given-names: Muhammad
+    affiliation: "Independent Researcher; M.Sc. Management, Technical University of Munich, Germany"
+    email: m.bilal@tum.de
 repository-code: "https://github.com/amughalbscs16/cukereuse"
 license: Apache-2.0
 version: 0.1.0
-date-released: 2026-04-18
+date-released: 2026-04-22
 preferred-citation:
   type: article
-  title: "cukereuse: Static, paraphrase-robust duplicate step detection for Cucumber/Gherkin — a tool and empirical corpus analysis"
+  title: "cukereuse: Static, paraphrase-robust duplicate step detection for Cucumber/Gherkin, with an empirical corpus and a Cognitive Dimensions analysis"
   authors:
     - family-names: Mughal
       given-names: Ali Hassaan
+      orcid: "https://orcid.org/0000-0002-0724-9197"
+    - family-names: Bilal
+      given-names: Muhammad
   year: 2026
-  # TODO: fill in once preprint is on arXiv
+  # DOI and URL to be added once the preprint is posted.
   # doi: "10.48550/arXiv.XXXX.XXXXX"
   # url: "https://arxiv.org/abs/XXXX.XXXXX"

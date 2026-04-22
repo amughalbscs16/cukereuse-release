@@ -9,7 +9,7 @@ Following the template from Gebru et al., *Datasheets for Datasets*, CACM 64(12)
 ## 1. Motivation
 
 - **For what purpose was the dataset created?** To support empirical study of duplicate and near-duplicate step definitions in public Cucumber/Gherkin `.feature` files, and to enable evaluation of the `cukereuse` static duplicate detector.
-- **Who created the dataset and who funds it?** Ali Hassaan Mughal (project lead). No external funding.
+- **Who created the dataset and who funds it?** Ali Hassaan Mughal (project lead, Texas Wesleyan University) and Muhammad Bilal (Technical University of Munich). No external funding.
 - **Any other comments?** The corpus is published as a pointer-based release (no raw-file redistribution of copyleft material) plus a permissive-licensed showcase directory.
 
 ## 2. Composition
@@ -102,6 +102,6 @@ Following the template from Gebru et al., *Datasheets for Datasets*, CACM 64(12)
 
 ## 7. Maintenance
 
-- **Who maintains it?** The author of the `cukereuse` repository.
+- **Who maintains it?** The authors of the `cukereuse` repository (Ali Hassaan Mughal and Muhammad Bilal).
 - **Errata?** Filed as GitHub issues on [amughalbscs16/cukereuse](https://github.com/amughalbscs16/cukereuse).
 - **Will the dataset be updated?** A frozen snapshot corresponds to each paper version, tagged as a GitHub release (`v0.1`, `v0.2`, …). Supersession of earlier versions is documented in the release notes.
