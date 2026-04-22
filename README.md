@@ -32,8 +32,8 @@ On the paper's public corpus, the top cluster groups **20,737 occurrences across
 ## Install
 
 ```bash
-git clone https://github.com/amughalbscs16/cukereuse.git
-cd cukereuse
+git clone https://github.com/amughalbscs16/cukereuse-release.git
+cd cukereuse-release
 uv sync
 uv run cukereuse --help
 ```
@@ -131,7 +131,7 @@ These are the citable headline numbers from the paper.
 - **Best pair-level detector:** near-exact (Levenshtein), F₁ = 0.822 under score-free evaluation, F₁ = 0.862 under the primary rubric.
 - **Circularity cost (primary-vs-score-free inter-protocol Cohen's κ):** 0.47.
 - **Lexical baselines (SourcererCC-style token Jaccard, NiCad-style TF-IDF char n-gram):** F₁ = 0.761 and 0.799.
-- **Labelled benchmark:** 1,020 pairs manually labelled by the authors (600 by the first author, 420 by the second) under a released written rubric.
+- **Labelled benchmark:** 1,020 pairs manually labelled by the three authors (500 by Mughal, 300 by Fatima, 220 by Bilal) under a released written rubric. Inter-annotator Fleiss' κ = 0.84 on a 60-pair overlap subset.
 - **CDN analysis of Gherkin:** 8 of 14 dimensions rated problematic or unsupported.
 
 ## Paper
@@ -151,10 +151,10 @@ If you use the tool, the corpus, or the labelled benchmark, please cite:
 ```bibtex
 @article{mughal2026cukereuse,
   author  = {Mughal, Ali Hassaan and Fatima, Noor and Bilal, Muhammad},
-  title   = {cukereuse: Static, paraphrase-robust duplicate step detection for {Cucumber}/{Gherkin}, with an empirical corpus and a {Cognitive} {Dimensions} analysis},
+  title   = {Finding duplicates in 1.1{M} {BDD} steps: cukereuse, a paraphrase-robust static detector for {Cucumber} and {Gherkin}},
   year    = {2026},
   note    = {arXiv preprint and GitHub release},
-  url     = {https://github.com/amughalbscs16/cukereuse}
+  url     = {https://github.com/amughalbscs16/cukereuse-release}
 }
 ```
 
