@@ -32,6 +32,23 @@
 
 \newcommand{\tool}{\textsc{cukereuse}\xspace}
 
+% Allow LaTeX extra flexibility on otherwise-overfull lines so that long
+% hyphenated compounds (e.g. "permissively-licensed", "step-duplication",
+% "behaviour-catalogue") stay within the right margin rather than protruding.
+\emergencystretch=3em
+
+% Custom hyphenation patterns for compound words that LaTeX's default
+% dictionary does not split well.
+\hyphenation{
+  per-mis-sive-ly per-mis-sive-ly-licensed
+  co-py-left co-py-left-licensed
+  para-phrase-robust para-phrase para-phrases
+  step-dup-li-ca-tion dup-li-ca-tion
+  be-ha-viour be-ha-viour-driven
+  script-ing-lan-guage
+  script-ing
+}
+
 \title{Finding Duplicates in 1.1M BDD Steps: \tool, a Paraphrase-Robust Static Detector for Cucumber and Gherkin}
 
 \author{%
@@ -66,7 +83,7 @@ sentence-transformer embeddings in a layered pipeline, released
 alongside an empirical corpus of 347 public GitHub repositories,
 23{,}667 parsed \texttt{.feature} files, and 1{,}113{,}616 Gherkin
 steps. The step-weighted exact-duplicate rate is 80.2\,\%; the
-median-repository rate is 52.5\,\% (Spearman $\rho = 0.51$ with
+median-repository rate is 58.6\,\% (Spearman $\rho = 0.51$ with
 size). Under paraphrase-aware hybrid clustering the top cluster
 groups 20.7k occurrences across 2.2k files. Against 1{,}020
 pairs manually labelled by the two authors under a released
@@ -293,9 +310,9 @@ Feature: Account login
     Then the session is created
 \end{lstlisting}
 Each step line (\texttt{Given the service is running},
-\texttt{When the user submits valid credentials}, etc.) is matched at
-runtime against a \emph{step definition} in the project's glue code,
-typically via regular expression. This matching is the seam at which
+\texttt{When the user submits valid credentials}, etc.) is matched
+at runtime against a \emph{step definition} in the project's glue
+code, typically via regular expression. This matching is the seam at which
 the duplication problem manifests: two step-text phrasings that differ
 syntactically may or may not bind to the same step definition, and
 there is no compile-time check.
@@ -1537,12 +1554,13 @@ exact-duplication rate. Figure~\ref{fig:size-vs-dup} plots the two.
 Spearman's rank correlation is $\rho = 0.508$ ($p = 3.7 \times 10^{-24}$,
 $n = 347$): repository size is a moderate-to-strong positive
 predictor of intra-repository duplication rate (Cohen's conventions:
-$\rho = 0.1$ small, $0.3$ medium, $0.5$ large). The median repository size is 518
-steps, and the median intra-repository duplication rate is 52.5\,\%,
-both markedly below the pooled 80.2\,\% rate. The pooled rate is thus
-dominated by the (relatively few) very large repositories; in a
-head-count-weighted average across repositories the effective rate is
-approximately 27 percentage points lower.
+$\rho = 0.1$ small, $0.3$ medium, $0.5$ large). The median
+repository size is 373 steps, and the median intra-repository
+duplication rate is 58.6\,\%, markedly below the pooled 80.2\,\%
+rate. The pooled rate is thus dominated by the (relatively few)
+very large repositories; in a repository-weighted average across
+the corpus the effective rate is approximately 22 percentage
+points lower.
 
 \begin{figure}[t]
 \centering
@@ -1560,7 +1578,7 @@ rate pulled up by a minority of very large suites.}
 \end{figure}
 
 \paragraph{What this means for the headline.} Our position is that
-\emph{both} the pooled 80.2\,\% and the median-repository 52.5\,\% are
+\emph{both} the pooled 80.2\,\% and the median-repository 58.6\,\% are
 valid statistics of the corpus, measuring different things. The
 pooled rate is the correct step-weighted statistic, answering
 "what fraction of all BDD step occurrences in public GitHub are
@@ -1905,7 +1923,7 @@ duplication rate is strongly correlated with repository size
 (Spearman $\rho = 0.51$). The pooled 80.2\,\% headline is a step-weighted
 statistic, dominated by a minority of very large repositories; the
 median repository's intra-repository duplication rate is only
-52.5\,\%. Readers should compare their own codebases against the
+58.6\,\%. Readers should compare their own codebases against the
 median, not the pooled rate. Licence-class differences are also
 partly attributable to size, as the unlicensed stratum averages
 one-third the size of the permissive stratum.
@@ -1959,7 +1977,7 @@ complementary deep-per-repo sampling strategy without
 framework or language filters; GWT in turn contributes
 scenario-to-code linkage that cukereuse does not. The two
 datasets are complementary. Its step-weighted exact-duplicate rate is
-80.2\,\% and its median-repository rate is 52.5\,\% (Spearman
+80.2\,\% and its median-repository rate is 58.6\,\% (Spearman
 $\rho = 0.51$ between repository size and duplication rate);
 the two are reported alongside each other and either can be cited
 according to the claim being made.

@@ -27,7 +27,7 @@ Given a `features/` directory, `cukereuse` finds that a phrasing like
 
 and its paraphrases (`status 200`, `the response status should be "200"`, `I should get a 200 response code`) appear together in tens of thousands of places. The HTML report groups them, shows every file and line, and names a canonical phrasing to consolidate toward.
 
-On the paper's public corpus, the top cluster groups **20,737 occurrences across 2,245 files in 43 repositories**. The corpus-wide step-weighted duplication rate is **80.2%**; the median repository's rate is **52.5%**.
+On the paper's public corpus, the top cluster groups **20,737 occurrences across 2,245 files in 43 repositories**. The corpus-wide step-weighted duplication rate is **80.2%**; the median repository's rate is **58.6%**.
 
 ## Install
 
@@ -125,7 +125,7 @@ These are the citable headline numbers from the paper.
 
 - **Corpus:** 347 public GitHub repositories, 23,667 parsed `.feature` files, 1,113,616 Gherkin steps.
 - **Step-weighted exact-duplicate rate:** 80.2%.
-- **Median-repository duplication rate:** 52.5%.
+- **Median-repository duplication rate:** 58.6%.
 - **Spearman ρ between repository size and duplication rate:** 0.508.
 - **Top cluster (hybrid):** `the response status is 200 OK`, 20,737 occurrences across 2,245 files, 43 repositories.
 - **Best pair-level detector:** near-exact (Levenshtein), F₁ = 0.822 under score-free evaluation, F₁ = 0.862 under the primary rubric.
