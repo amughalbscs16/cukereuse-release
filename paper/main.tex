@@ -56,44 +56,34 @@
 \begin{abstract}
 Behaviour-Driven Development (BDD) suites in long-lived projects
 accumulate step-text duplication whose maintenance cost is
-established in prior BDD-quality work. Existing detection
-techniques rely on dynamic execution tracing (Binamungu et al.,
-2018-2023) or normalised compression distance at industrial scale
-(Irshad et al., 2020-2022), leaving a gap: a purely
-\emph{static}, \emph{paraphrase-robust}, \emph{step-level}
-duplicate detector usable on any repository without a configured
-test runner. We fill that gap with \tool, an open-source Python CLI
-combining exact hashing, Levenshtein ratio, and sentence-transformer
-embeddings in a layered pipeline, released alongside an empirical
-corpus of 347 public GitHub repositories, approximately 23.7k
-parsed \texttt{.feature} files and 1.11M Gherkin steps. The
-step-weighted exact-duplicate rate is 80.2\,\%; the
-median-repository rate is 52.5\,\%, with Spearman $\rho = 0.51$
-between repository size and duplication rate, so the pooled
-headline is pulled up by a minority of very large suites. Under
-paraphrase-aware hybrid clustering the top cluster
-(\texttt{the response status is 200 OK}) groups 20.7k occurrences
-across 2.2k distinct files compared to 6.1k under exact string-match.
-Against 1{,}020 pairs manually labelled by the authors (600 by the
-first author, 420 by the second) under a released written rubric,
-we report precision, recall, and F$_1$ per strategy with bootstrap
-95\,\% confidence intervals under two evaluation protocols: the
-primary rubric and a score-free second-pass relabelling whose
-positive rules consult no cosine or Levenshtein values. The
-strongest pair-level result is near-exact (Levenshtein) detection
-at F$_1 = 0.822$ on the score-free labels; the semantic detector
-reaches F$_1 = 0.906$ [0.886, 0.923] under the primary rubric. Two
-lexical baselines standing in for classical token-stream clone
-detectors (SourcererCC-style, NiCad-style) reach primary
-F$_1 = 0.761$ and $0.799$. The paper also contains, to our
+established in prior work. Existing detection techniques require
+running the tests (Binamungu et al., 2018-2023) or are confined to
+a single organisation (Irshad et al., 2020-2022), leaving a gap: a
+purely static, paraphrase-robust, step-level detector usable on
+any repository. We fill the gap with \tool, an open-source Python
+CLI combining exact hashing, Levenshtein ratio, and
+sentence-transformer embeddings in a layered pipeline, released
+alongside an empirical corpus of 347 public GitHub repositories,
+23{,}667 parsed \texttt{.feature} files, and 1{,}113{,}616 Gherkin
+steps. The step-weighted exact-duplicate rate is 80.2\,\%; the
+median-repository rate is 52.5\,\% (Spearman $\rho = 0.51$ with
+size). Under paraphrase-aware hybrid clustering the top cluster
+groups 20.7k occurrences across 2.2k files. Against 1{,}020
+pairs manually labelled by the two authors under a released
+written rubric, we report precision, recall, and F$_1$ with
+bootstrap 95\,\% confidence intervals under two protocols: the
+primary rubric and a score-free second-pass relabelling. The
+strongest pair-level result is near-exact at F$_1 = 0.822$ on the
+score-free labels; the semantic detector reaches
+F$_1 = 0.906$ [0.886, 0.923] under the primary rubric. Two lexical
+baselines (SourcererCC-style, NiCad-style) reach primary
+F$_1 = 0.761$ and $0.799$. The paper also contributes, to our
 knowledge, the first Cognitive Dimensions of Notations analysis of
-Gherkin in the peer-reviewed literature, an author assessment
-grounded in corpus evidence; eight of fourteen dimensions are rated
-problematic or unsupported. The tool, corpus manifest, labelled
-pairs, rubric, and analysis pipeline are released under permissive
-licences. Applications extend to novelty filtering for
-LLM-generated and agentic-AI-generated BDD scenarios, a direction
-we flag in future work.
+Gherkin in the peer-reviewed literature; eight of fourteen
+dimensions are rated problematic or unsupported. Applications
+extend to novelty filtering for LLM-generated and
+agentic-AI-generated BDD scenarios. The tool, corpus, labelled
+pairs, rubric, and pipeline are released under permissive licences.
 \end{abstract}
 
 \vspace{1ex}
@@ -101,8 +91,8 @@ we flag in future work.
 Cucumber; Gherkin; duplicate detection; clone detection;
 paraphrase-robust matching; static analysis; sentence-transformer;
 semantic similarity; neural clone detection; test automation;
-AI-assisted testing; LLM evaluation; agentic AI (future work
-application); empirical software engineering; mining software
+AI-assisted testing; LLM evaluation; agentic AI;
+empirical software engineering; mining software
 repositories; cognitive dimensions of notations; software
 maintenance; test refactoring; test specification; software quality.
 
