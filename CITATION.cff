@@ -1,6 +1,6 @@
 cff-version: 1.2.0
-message: "If you use this tool or its corpus in academic work, please cite it as below."
-title: "cukereuse: Finding duplicates in 1.1M BDD steps, a paraphrase-robust static detector for Cucumber and Gherkin"
+message: "If you use this tool or the corpus, please cite using the metadata below. The accompanying research paper is under preparation; its DOI and preprint URL will be added to this file once available."
+title: "cukereuse: paraphrase-robust static duplicate step detection for Cucumber and Gherkin"
 type: software
 authors:
   - family-names: Mughal
@@ -21,16 +21,3 @@ repository-code: "https://github.com/amughalbscs16/cukereuse-release"
 license: Apache-2.0
 version: 0.1.0
 date-released: 2026-04-22
-preferred-citation:
-  type: article
-  title: "Finding duplicates in 1.1M BDD steps: cukereuse, a paraphrase-robust static detector for Cucumber and Gherkin"
-  authors:
-    - family-names: Mughal
-      given-names: Ali Hassaan
-      orcid: "https://orcid.org/0000-0002-0724-9197"
-    - family-names: Fatima
-      given-names: Noor
-    - family-names: Bilal
-      given-names: Muhammad
-      orcid: "https://orcid.org/0000-0003-4106-0256"
-  year: 2026

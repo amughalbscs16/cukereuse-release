@@ -2,7 +2,7 @@
 
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](pyproject.toml)
-[![Status](https://img.shields.io/badge/status-research_release-brightgreen.svg)](paper/main.pdf)
+[![Status](https://img.shields.io/badge/status-research_release-brightgreen.svg)](CITATION.cff)
 
 Static detector for duplicate and near-duplicate step text in `.feature` files. Works across Cucumber-JVM (Java), behave and pytest-bdd (Python), Cucumber-Ruby, cucumber-js, SpecFlow (.NET), and Behat (PHP). No test execution required. Runs on any repository.
 
@@ -10,7 +10,7 @@ Ships with:
 - a CLI tool (`cukereuse`)
 - a corpus of 1.11M Gherkin steps from 347 public GitHub repositories
 - a 1,020-pair labelled calibration set with a written rubric
-- a peer-review-ready research paper ([`paper/main.pdf`](paper/main.pdf))
+- a research paper (accompanying publication; details forthcoming)
 
 ## Who this is for
 
@@ -67,7 +67,7 @@ Every run produces a browsable HTML report (inline CSS, collapsible cluster card
 | Semantic pair classification | `semantic` (SBERT cosine) | 0.82 |
 | Project-wide paraphrase-aware cluster report | `hybrid` (cos + Lev band) | cos 0.82, Lev 0.30–0.95 |
 
-Thresholds are calibrated against 1,020 labelled pairs under two evaluation protocols (primary rubric and a score-free second-pass relabelling). Full numbers, bootstrap confidence intervals, and the pair-vs-cluster threshold analysis are in Section 7 of the paper.
+Thresholds are calibrated against 1,020 labelled pairs under two evaluation protocols (primary rubric and a score-free second-pass relabelling). Full numbers, bootstrap confidence intervals, and the pair-vs-cluster threshold analysis will be in the accompanying paper (forthcoming).
 
 The paper's recommendation: **near-exact** is the strongest pair-level classifier (F₁ = 0.822 on score-free labels, F₁ = 0.862 on the primary rubric). **Hybrid** is the recommended strategy for building project-wide cluster reports because its Levenshtein band prevents transitive chaining that pure semantic clustering suffers from.
 
@@ -136,27 +136,25 @@ These are the citable headline numbers from the paper.
 
 ## Paper
 
-The peer-review-ready paper is [`paper/main.pdf`](paper/main.pdf). LaTeX source and `references.bib` are in the same directory. Covers:
+The research paper accompanying this release is under preparation.
+It covers:
 
 - Corpus construction and a size-vs-duplication analysis.
 - Four detection strategies with bootstrap-CI calibration under two evaluation protocols.
 - Two lexical baselines (SourcererCC-style, NiCad-style) on the same benchmark.
-- A Cognitive Dimensions of Notations (CDN) analysis of Gherkin, to our knowledge the first in the peer-reviewed literature.
+- A CDN-structured critique of Gherkin grounded in concrete corpus observations.
 - Failure-mode breakdown (polarity flips, HTTP-verb mismatch, framework-keyword semantic shift).
+
+The preprint URL and DOI will be added here once they are available;
+`CITATION.cff` in this repository will be updated at the same time.
 
 ## Citation
 
-If you use the tool, the corpus, or the labelled benchmark, please cite:
-
-```bibtex
-@article{mughal2026cukereuse,
-  author  = {Mughal, Ali Hassaan and Fatima, Noor and Bilal, Muhammad},
-  title   = {Finding duplicates in 1.1{M} {BDD} steps: cukereuse, a paraphrase-robust static detector for {Cucumber} and {Gherkin}},
-  year    = {2026},
-  note    = {arXiv preprint and GitHub release},
-  url     = {https://github.com/amughalbscs16/cukereuse-release}
-}
-```
+Use the `CITATION.cff` file in the root of this repository (GitHub
+renders it as the "Cite this repository" widget in the sidebar).
+Once the preprint is live, the full citation form will be populated
+with its arXiv ID and DOI. Until then, cite the dataset and tool
+release via the repository URL and the release tag.
 
 `CITATION.cff` mirrors the same metadata for GitHub's citation widget.
 
