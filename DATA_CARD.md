@@ -1,45 +1,40 @@
-# Datasheet for the Cukereuse Corpus
+# Datasheet for the cukereuse corpus
 
-Following the template from Gebru et al., *Datasheets for Datasets*, CACM 64(12), 2021.
+Follows the template from Gebru et al., *Datasheets for Datasets*, CACM 64(12), 2021.
 
-**Version:** 0.1 (April 2026). Corresponds to the commit hash below at time of release.
+**Version:** 0.1 (April 2026). Corresponds to the repository commit at release.
 
 ---
 
 ## 1. Motivation
 
-- **For what purpose was the dataset created?** To support empirical study of duplicate and near-duplicate step definitions in public Cucumber/Gherkin `.feature` files, and to enable evaluation of the `cukereuse` static duplicate detector.
-- **Who created the dataset and who funds it?** Ali Hassaan Mughal (project lead, Texas Wesleyan University) and Muhammad Bilal (Technical University of Munich). No external funding.
-- **Any other comments?** The corpus is published as a pointer-based release (no raw-file redistribution of copyleft material) plus a permissive-licensed showcase directory.
+- **For what purpose was the dataset created?** To enable empirical study of duplicate and near-duplicate step text in public Cucumber/Gherkin `.feature` files, and to calibrate and evaluate the `cukereuse` static duplicate detector.
+- **Who created the dataset and who funds it?** Ali Hassaan Mughal (Texas Wesleyan University) and Muhammad Bilal (Technical University of Munich). No external funding.
+- **Any other comments?** The corpus is a pointer-based release. Derived analytical metadata (parquet, JSONL) is redistributed under Apache-2.0. Raw `.feature`-file bodies are not redistributed; they are reconstructed on demand from pinned commit SHAs and remain under each source repository's licence.
 
 ## 2. Composition
 
 - **What do the instances represent?** Step-level records extracted from `.feature` files in public GitHub repositories. One row per Given/When/Then/And/But step.
-- **How many instances are there?** **1,113,616 steps** across **23,667 parsed `.feature` files** (25,034 enumerated on disk; 1,367 are empty, tag-only, or fail the gherkin grammar) spanning **347 repositories** (v0.1, April 2026).
+- **How many instances are there?** 1,113,616 steps across 23,667 parsed `.feature` files (25,034 enumerated on disk; 1,367 are empty, tag-only, or fail the gherkin grammar) spanning 347 repositories.
 - **What data does each instance contain?**
-  - `repo` — GitHub `owner/name`
-  - `commit_sha` — pinned commit (40-char hex)
-  - `file_path` — relative path of the `.feature` file inside the repo
-  - `line` — line number of the step in its source file
-  - `keyword` — `Given` / `When` / `Then` / `And` / `But`
-  - `text` — the step phrasing (doc strings / data tables stripped)
-  - `scenario` — enclosing scenario name (empty string for Background steps)
-  - `feature` — enclosing feature name
-  - `tags` — list of Gherkin tags (feature-level + scenario-level, merged)
-  - `is_background` — boolean; the step belongs to a `Background:` block
-  - `is_outline` — boolean; the step belongs to a `Scenario Outline:` block
-  - `license_spdx` — SPDX identifier of the source repo's license (from GitHub's API)
-  - `license_class` — `permissive` / `copyleft` / `unlicensed` / `unknown`
-- **Is there a label or target?** `corpus/labeled_pairs.jsonl` contains **1,020 labeled pairs** (494 duplicates, 526 not-duplicates) stratified across cosine-similarity bands for threshold calibration. Labels were produced by the first author under a written rubric (`corpus/LABELING_RUBRIC.md`, ten ordered decision rules); each row carries a `labeler` field (`"author"`) and a `rule` field identifying which rubric clause fired. Single-annotator labels are a known threat to validity; independent-annotator replication is a stated direction for future work.
-- **Are there recommended data splits?** None yet; all records are in a single parquet file. Splits per research use (train/test, by license class, by repo size) should be constructed by the consumer.
+  - `repo`, `commit_sha` (40-char hex), `file_path`, `line`.
+  - `keyword` (`Given` / `When` / `Then` / `And` / `But`).
+  - `text` (the step phrasing; doc strings and data tables are stripped).
+  - `scenario`, `feature` (enclosing names).
+  - `tags` (feature-level plus scenario-level tag list, merged).
+  - `is_background`, `is_outline` (booleans).
+  - `license_spdx` (SPDX identifier from GitHub's licence endpoint).
+  - `license_class` (`permissive` / `copyleft` / `unknown` / `unlicensed`).
+- **Is there a label or target?** `corpus/labeled_pairs.jsonl` contains 1,020 labelled pairs (494 duplicates, 526 not-duplicates) stratified across six cosine-similarity bands. Labels were produced manually by the two authors (600 pairs by Ali Hassaan Mughal, 420 by Muhammad Bilal) under a shared written rubric in `corpus/LABELING_RUBRIC.md` (ten ordered decision rules). Every row carries a `labeler` field and a `rule` field recording which rubric clause fired, so rubric application is auditable pair by pair. Both authors cross-reviewed boundary cases after each 200-pair batch to converge on consistent R4-R8 application.
+- **Are there recommended data splits?** No built-in splits. Consumers should construct splits for their research use (train/test, by licence class, by repository size).
 - **Are there errors, noise, or redundancies?** Expected:
-  - **Duplication is the subject of study.** 80.2% of steps are exact-text duplicates of another step in the corpus — this is intentional and is the central empirical phenomenon.
-  - Some Scenario Outline placeholder tokens (`<role>`, `<id>`) are preserved verbatim rather than unrolled.
-  - Whitespace inside step text is preserved; only leading/trailing whitespace is trimmed.
-  - Files that failed the gherkin-official parser were skipped silently (workers return empty row lists on any parse error). Observed causes: UTF-8 BOM at start of file (1C-CPM Russian-locale repos), unterminated doc strings.
-- **Does the dataset contain confidential/offensive/sensitive content?** No PII is retained. Git commit-author metadata is stripped at the pointer level. A regex sweep for emails and IP addresses was applied to the permissive showcase directory (`corpus/examples/`) prior to release. Features harvested from public GitHub are subject to the original repo's license and the GitHub ToS.
+  - Duplication is the subject of study. 80.2% of steps are byte-identical duplicates of another step after whitespace normalisation; this is the central empirical phenomenon.
+  - Scenario Outline placeholder tokens (`<role>`, `<id>`) are preserved verbatim, not unrolled against the Examples table.
+  - Internal whitespace is preserved; leading and trailing whitespace are trimmed.
+  - Files that fail the `gherkin-official` parser produce zero rows. Observed causes: UTF-8 BOM prefixes from locale-specific editors, unterminated doc strings.
+- **Sensitive content?** No PII is retained. Git commit-author metadata is stripped at the pointer level. A regex sweep for emails and IP addresses was applied to the permissive showcase directory prior to release. Content harvested from public GitHub remains subject to each source repository's licence and GitHub's Terms of Service.
 
-### Coarse breakdown (v0.1)
+### Coarse breakdown
 
 | Axis | Count |
 |---|---:|
@@ -47,61 +42,70 @@ Following the template from Gebru et al., *Datasheets for Datasets*, CACM 64(12)
 | `.feature` files (parsed into steps) | 23,667 |
 | `.feature` files (enumerated on disk) | 25,034 |
 | steps (total) | 1,113,616 |
-| unique normalized step texts | 220,312 |
+| unique normalised step texts | 220,312 |
 | Background steps | 61,214 |
 | Scenario Outline steps | 66,020 |
 | duplicate clusters (exact strategy) | 82,545 |
-| clusters with ≥ 1000 occurrences | 86 |
+| duplicate clusters (hybrid strategy) | 65,242 |
+| clusters with ≥ 1,000 occurrences (exact) | 86 |
+| labelled pairs (calibration set) | 1,020 |
 
-### License class distribution (steps, not repos)
+### Licence class distribution (by step count)
 
 | class | steps | share |
 |---|---:|---:|
-| permissive   | 635,586 | 57.1% |
-| copyleft     | 232,297 | 20.9% |
+| permissive | 635,586 | 57.1% |
+| copyleft | 232,297 | 20.9% |
 | unknown (NOASSERTION / detector failure) | 174,077 | 15.6% |
-| unlicensed (no LICENSE file) | 71,656 |  6.4% |
+| unlicensed (no LICENSE file) | 71,656 | 6.4% |
 
-**Showcase eligibility:** the permissive-licensed subset (57.1% of steps, ~200 repos) is redistributable in `corpus/examples/` with LICENSE + NOTICE preserved. Everything else is pointer-only via `scripts/rehydrate.py`.
+The permissive subset (approximately 57% of steps) is redistributable as raw content; the remainder is pointer-only via `scripts/rehydrate.py`.
 
 ## 3. Collection process
 
 - **How was the data acquired?** Three-stage pipeline under `scripts/`:
-  1. **Discovery** via GitHub's REST Search API (`gh` CLI auth), combining (a) `/search/repositories?q=language:Gherkin+stars:>=10` and (b) `/search/code?q="Feature:"+extension:feature` / `"Scenario:"` / `"Background:"`. We pivoted away from the plan's original GH Archive + BigQuery path because it requires Google Cloud billing setup; the REST fallback hits a 1,000-results-per-query cap but is sufficient at this scale. 1,333 distinct repos surfaced; 377 passed the stars/archived filters.
-  2. **Shallow + sparse clone** via `git clone --depth 1 --filter=blob:none --no-checkout` followed by `git sparse-checkout set --no-cone '**/*.feature'`. Only blobs for matching paths are downloaded. Pinned commit SHAs are recorded in `corpus/clone_manifest.jsonl`. 368 repos successfully cloned, 725 MB disk (~2 KB/step).
-  3. **Parsing** via the cukereuse wrapper around `gherkin-official` v29 (Cucumber's authoritative parser), fanned across a thread pool. Emits `corpus/steps.parquet` (zstd-compressed).
-- **Over what timeframe?** Mining and parsing were run on 2026-04-19. The discovery queries capture GitHub's state on that day; pinned commit SHAs make the corpus content deterministic beyond that point.
-- **Was there an ethical review?** Data is drawn exclusively from public GitHub repositories. License compatibility is tracked per repo. No deanonymisation attempts; no aggregation beyond the step level.
+  1. **Discovery** via GitHub's REST Search API. Two complementary queries: (a) `/search/repositories?q=language:Gherkin+stars:>=10` and (b) `/search/code?q="Feature:"+extension:feature` (plus the same shape for `Scenario:` and `Background:`). The BigQuery alternative via GH Archive was not used (Google Cloud billing not available at collection time); the REST path is sufficient at this scale. Before deduplication the candidate pool totalled approximately 1,333 repositories; after deduplication by `owner/name` and re-application of the stars and archived filters, 377 unique repositories passed.
+  2. **Shallow plus sparse clone** via `git clone --depth 1 --filter=blob:none --no-checkout` followed by `git sparse-checkout set --no-cone '**/*.feature'`. Only blobs for matching paths are downloaded. Pinned commit SHAs are recorded in `corpus/clone_manifest.jsonl`. 368 of 377 targeted repositories cloned successfully (9 private/deleted); approximately 2 KB of bandwidth per step acquired.
+  3. **Parsing** via the `cukereuse` wrapper around `gherkin-official` v29 (Cucumber's authoritative parser), fanned across a thread pool. Emits `corpus/steps.parquet` (zstd-compressed). 21 of the 368 cloned repositories contribute zero steps to the final table (empty, tag-only, or ungrammatical files).
+- **Over what timeframe?** Mining and parsing were run on 2026-04-19. Discovery captures GitHub's state on that day; pinned commit SHAs make the corpus content deterministic beyond that point.
+- **Ethical review?** Data is drawn exclusively from public GitHub repositories. Licence compatibility is tracked per repository. No deanonymisation; no aggregation beyond the step level.
 
-## 4. Preprocessing / cleaning / labeling
+## 4. Preprocessing, cleaning, labelling
 
-- **Was any preprocessing done?**
-  - Text normalisation: whitespace runs are collapsed to single spaces and edges are trimmed (`cukereuse.similarity.normalize`). No case-folding — Gherkin is case-sensitive in practice.
-  - Doc strings (`"""…"""`) and data tables (`| … |`) are treated as step arguments and excluded from the `text` column — they are step *arguments*, not step *phrasings*. The official gherkin AST exposes them on separate fields which we drop.
-  - Scenario Outlines are NOT unrolled: the outline body with `<placeholder>` tokens appears as one row, rather than one row per Examples table row.
-- **Is raw data saved?** Only pointers (`repo`, `commit_sha`, `file_path`) are saved long-term. Raw feature files can be reconstructed via `scripts/rehydrate.py` (fetches `https://raw.githubusercontent.com/<repo>/<sha>/<path>`). The permissive-licensed subset is also redistributed directly in `corpus/examples/`.
+- **Text normalisation:** whitespace runs collapsed to single spaces; leading and trailing whitespace trimmed (`cukereuse.similarity.normalize`). No case-folding, Gherkin step text is case-sensitive in practice.
+- **Doc strings and data tables:** treated as step arguments and excluded from the `text` column. The `gherkin-official` AST exposes them on separate fields, which this schema drops.
+- **Scenario Outlines:** not unrolled. The outline body with `<placeholder>` tokens appears as one row, not one per Examples row.
+- **Labelling:** manual, two-author, against the shared rubric described in §2. Every label carries the rule that fired so rubric application is auditable without re-annotating.
+- **Raw data retention:** only pointers (`repo`, `commit_sha`, `file_path`) are kept. Raw feature files are reconstructed via `scripts/rehydrate.py`, which fetches `https://raw.githubusercontent.com/<repo>/<sha>/<path>`.
 
 ## 5. Uses
 
-- **Tasks already supported by this corpus (v0.1):**
-  - Threshold calibration for the cukereuse duplicate detector (see `probe/SCOUT_REPORT.md`).
-  - Empirical evidence for the paper's headline finding: 80.2% of steps in a random sample of 347 BDD projects are exact-text duplicates of another step in the same corpus.
-- **Other tasks the corpus could support:**
-  - Empirical study of BDD practices across languages/ecosystems (Java/Cucumber-JVM vs Ruby/Cucumber vs PHP/Behat vs Python/behave).
-  - Pretraining / evaluation of language models on test-specification text.
-  - Research into automatic test refactoring, step-definition generation, tag taxonomies.
-  - Cognitive-Dimensions-of-Notations analysis of BDD notations — each Section 4 dimension of the paper is grounded in a concrete example pulled from this corpus.
-- **Is there anything that a dataset consumer could do that should NOT be done?**
-  - Do not redistribute copyleft-licensed feature files as raw content without complying with source terms. Use the pointers + `rehydrate.py` for any content outside the permissive showcase.
-  - Do not use the pointers to violate the source repos' ToS (rate limits, scraping, etc.).
+Supported tasks for v0.1:
+
+- Threshold calibration for the `cukereuse` duplicate detector (paper §7).
+- Empirical baseline for "what fraction of real BDD step text is duplicated?" (80.2% step-weighted, 52.5% median-repository).
+- Replication of the bootstrap-CI calibration, the score-free relabelling protocol, the licence-stratified analysis, and the size-vs-duplication scatter.
+
+Additional tasks the corpus supports:
+
+- Cross-ecosystem BDD practice analysis (Java/Cucumber-JVM, Ruby/Cucumber, PHP/Behat, Python/behave, JS/cucumber-js).
+- Pretraining or evaluation of language models on test-specification text.
+- Research into automatic test refactoring, step-definition generation, tag taxonomies.
+- Cognitive Dimensions of Notations analysis of BDD notations, grounded in concrete corpus examples (paper §4).
+
+Restrictions:
+
+- Do not redistribute copyleft-licensed raw feature files without complying with the source licence. Use the pointers plus `rehydrate.py`.
+- Do not use the pointers to violate the source repositories' Terms of Service (rate limits, scraping).
 
 ## 6. Distribution
 
-- **Release channels:** GitHub repository at [amughalbscs16/cukereuse](https://github.com/amughalbscs16/cukereuse) (Apache-2.0 for source code and schema). The release bundle includes: `repos.csv`, `clone_manifest.jsonl`, `steps.parquet`, `clusters_exact.parquet`, `clusters_hybrid.parquet`, `cluster_members_exact.parquet`, `cluster_members_hybrid.parquet`, `labeled_pairs.jsonl`, `LABELING_RUBRIC.md`, this DATA_CARD, and a README pointing at rehydration.
-- **Restrictions:** The parquet files contain analytical metadata (canonical step text, SPDX class per row). Verbatim raw `.feature` file bodies are not redistributed; `rehydrate.py` fetches each original file from its upstream repository on demand at the pinned commit SHA, preserving the source licence's obligations.
+- **Release channel:** GitHub repository at [amughalbscs16/cukereuse](https://github.com/amughalbscs16/cukereuse). Apache-2.0 for source code and analytical schema.
+- **Release bundle:** `repos.csv`, `clone_manifest.jsonl`, `steps.parquet`, `clusters_exact.parquet`, `clusters_hybrid.parquet`, `cluster_members_exact.parquet`, `cluster_members_hybrid.parquet`, `labeled_pairs.jsonl`, `LABELING_RUBRIC.md`, this datasheet, `README.md`. Total approximately 46 MB.
+- **What is NOT redistributed:** verbatim raw `.feature`-file bodies (approximately 418 MB of content that inherits copyleft obligations from its source repositories). `rehydrate.py` fetches each original file from its upstream repository on demand at the pinned commit SHA.
 
 ## 7. Maintenance
 
-- **Who maintains it?** The authors of the `cukereuse` repository (Ali Hassaan Mughal and Muhammad Bilal).
-- **Errata?** Filed as GitHub issues on [amughalbscs16/cukereuse](https://github.com/amughalbscs16/cukereuse).
-- **Will the dataset be updated?** A frozen snapshot corresponds to each paper version, tagged as a GitHub release (`v0.1`, `v0.2`, …). Supersession of earlier versions is documented in the release notes.
+- **Maintainers:** the authors of the `cukereuse` repository (Ali Hassaan Mughal and Muhammad Bilal).
+- **Errata:** filed as GitHub issues on [amughalbscs16/cukereuse](https://github.com/amughalbscs16/cukereuse).
+- **Versioning:** a frozen snapshot corresponds to each paper version, tagged as a GitHub release (`v0.1`, `v0.2`, …). Supersession of earlier versions is documented in the release notes.
