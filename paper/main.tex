@@ -407,31 +407,47 @@ Suan's 2015 Manchester MSc thesis \citep{suan2015msc} prototypes a
 textual-plus-AST Gherkin similarity tool, unpublished outside
 Manchester and not applied to a corpus.
 
-Table~\ref{tab:corpus-compare} positions our corpus against the three
-most directly-comparable prior BDD-quality corpora in published literature.
-To our knowledge no prior cross-organisational, cross-repository
-\texttt{.feature}-file corpus has been released with a permissive-licensed
-pointer bundle and rehydration tooling.
+Table~\ref{tab:corpus-compare} positions our corpus against
+comparable BDD-quality corpora in the literature, including the
+concurrent GivenWhenThen (GWT) dataset
+\citep{alcantara2026gwt} released at MSR 2026 in the same month as
+this work. GWT and cukereuse share no authors and no coordination,
+and their sampling strategies are deliberately different: GWT
+samples on average 1.33 scenarios per repository across 1{,}720
+filtered repositories (one-scenario-per-repo breadth sampling,
+with official-Cucumber-only and English-only filters), while
+cukereuse exhaustively mines every \texttt{.feature} file from
+each of 347 repositories (no framework filter, no language filter).
+On publicly reported axes cukereuse reports the larger step and
+scenario counts; on repository count GWT reports a wider
+cross-section. GWT additionally links each scenario to its backing
+step-definition file and source-code dependencies, a contribution
+cukereuse does not make. The datasets are complementary rather
+than substitutes.
 
 \begin{table}[t]
 \centering
-\caption{BDD-quality corpora reported in published prior work, compared
-to the present corpus. Counts are as reported by the cited authors.
-"Cross-org" is yes if the corpus spans more than one independent
-organisation or repository owner.}
+\caption{BDD-quality corpora reported in published prior and
+concurrent work, compared to the present corpus. Counts are as
+reported by the cited authors; "n/r" means not reported in the
+cited source. "Cross-org" is yes if the corpus spans more than
+one independent organisation or repository owner.}
 \label{tab:corpus-compare}
 \footnotesize
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{lrlcc}
+\setlength{\tabcolsep}{3pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llrrrrcc}
 \toprule
-Corpus                                       & Projects & Steps / Scenarios               & Cross-org & Released \\
+Corpus                                       & Year    & Repos & Files & Scenarios & Steps & Cross-org & Released \\
 \midrule
-Binamungu et al.\ \citep{binamungu2023jss}   &        4 & 277 scenarios                   & no        & no \\
-Irshad et al.\ \citep{irshad2021jss}         &        1 & $\sim$15k steps (internal)      & no        & no \\
-Suan \citep{suan2015msc}                     &        3 & few hundred                     & no        & no \\
-\textbf{\tool\ (this paper)}                 & \textbf{347} & \textbf{1{,}113{,}616 steps}  & \textbf{yes} & \textbf{yes} \\
+Binamungu et al.\ \citep{binamungu2023jss}   & 2018-23 &     4 &    n/r &      277 & n/r     & no  & no \\
+Irshad et al.\ \citep{irshad2021jss}         & 2020-22 &     1 &    n/r &      n/r & $\sim$15k (internal) & no  & no \\
+Suan \citep{suan2015msc}                     & 2015    &     3 &    n/r &      n/r & few hundred & no  & no \\
+GWT \citep{alcantara2026gwt}                 & 2026    & 1{,}720 &  n/r & 2{,}289 & n/r   & yes & yes \\
+\textbf{\tool\ (this paper)}                 & 2026    & \textbf{347} & \textbf{23{,}667} & \textbf{136{,}970} & \textbf{1{,}113{,}616} & \textbf{yes} & \textbf{yes} \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \end{table}
 
 A separate strand considers the generation or refactoring of Gherkin
@@ -1936,11 +1952,17 @@ Cohen's $\kappa = 0.47$ quantifying the rubric-coupling cost between
 the two evaluations. Two lexical
 baselines representing classical token-stream clone detectors
 (SourcererCC-style, NiCad-style) reach primary F$_1 = 0.761$ and
-$0.799$ on the same benchmark. The accompanying corpus, to our
-knowledge the largest released BDD corpus
-(Table~\ref{tab:corpus-compare}), comprises 347 public GitHub
-repositories, approximately 23.7k parsed \texttt{.feature} files,
-and 1.11M steps. Its step-weighted exact-duplicate rate is
+$0.799$ on the same benchmark. The accompanying corpus comprises 347 public GitHub repositories,
+23{,}667 parsed \texttt{.feature} files, 136{,}970 scenarios, and
+1{,}113{,}616 steps (Table~\ref{tab:corpus-compare}). Compared to
+the concurrent GivenWhenThen dataset \citep{alcantara2026gwt},
+which mines a wider cross-section of 1{,}720 repositories by
+sampling an average of 1.33 scenarios per repository, cukereuse
+reports the larger step and scenario counts under a
+complementary deep-per-repo sampling strategy without
+framework or language filters; GWT in turn contributes
+scenario-to-code linkage that cukereuse does not. The two
+datasets are complementary. Its step-weighted exact-duplicate rate is
 80.2\,\% and its median-repository rate is 52.5\,\% (Spearman
 $\rho = 0.51$ between repository size and duplication rate);
 the two are reported alongside each other and either can be cited
