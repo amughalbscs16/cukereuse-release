@@ -1,0 +1,79 @@
+{
+  "n_repos": 347,
+  "spearman_rho": 0.5079,
+  "p_value": 3.699e-24,
+  "median_repo_size_steps": 373,
+  "median_repo_dup_rate": 0.5855,
+  "per_repo_preview": [
+    {
+      "repo_slug": "3scale_porta",
+      "n_steps": 8471,
+      "n_unique": 3571,
+      "dup_rate": 0.5784,
+      "license_class": "permissive"
+    },
+    {
+      "repo_slug": "4shen_webshell",
+      "n_steps": 39338,
+      "n_unique": 12105,
+      "dup_rate": 0.6923,
+      "license_class": "unlicensed"
+    },
+    {
+      "repo_slug": "AFixt_apg-gherkin",
+      "n_steps": 620,
+      "n_unique": 553,
+      "dup_rate": 0.1081,
+      "license_class": "permissive"
+    },
+    {
+      "repo_slug": "AgileVentures_AgileVentures",
+      "n_steps": 23,
+      "n_unique": 22,
+      "dup_rate": 0.0435,
+      "license_class": "unlicensed"
+    },
+    {
+      "repo_slug": "AgileVentures_WebsiteOne",
+      "n_steps": 1513,
+      "n_unique": 815,
+      "dup_rate": 0.4613,
+      "license_class": "unknown"
+    },
+    {
+      "repo_slug": "ArcadeData_arcadedb",
+      "n_steps": 7104,
+      "n_unique": 71,
+      "dup_rate": 0.99,
+      "license_class": "permissive"
+    },
+    {
+      "repo_slug": "Automattic_co-authors-plus",
+      "n_steps": 28,
+      "n_unique": 15,
+      "dup_rate": 0.4643,
+      "license_class": "copyleft"
+    },
+    {
+      "repo_slug": "BRP-API_Haal-Centraal-BRP-bevragen",
+      "n_steps": 9644,
+      "n_unique": 1292,
+      "dup_rate": 0.866,
+      "license_class": "unknown"
+    },
+    {
+      "repo_slug": "BalamiRR_QA-Testinium",
+      "n_steps": 316,
+      "n_unique": 93,
+      "dup_rate": 0.7057,
+      "license_class": "unlicensed"
+    },
+    {
+      "repo_slug": "BitBagCommerce_SyliusCmsPlugin",
+      "n_steps": 373,
+      "n_unique": 210,
+      "dup_rate": 0.437,
+      "license_class": "permissive"
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "overall": {
+    "n_steps": 1113616,
+    "n_repos": 347,
+    "n_unique_texts": 220312,
+    "exact_dup_rate": 0.8022
+  },
+  "per_class": {
+    "copyleft": {
+      "n_steps": 232297,
+      "n_repos": 40,
+      "n_unique_texts": 54472,
+      "exact_dup_rate": 0.7655,
+      "n_clusters": 21511,
+      "steps_in_clusters": 199348,
+      "top_5_clusters": [
+        {
+          "canonical_text": "the parties place the following orders:",
+          "count": 2953,
+          "files": 588
+        },
+        {
+          "canonical_text": "the step should succeed",
+          "count": 2673,
+          "files": 197
+        },
+        {
+          "canonical_text": "transaction commits",
+          "count": 2460,
+          "files": 44
+        },
+        {
+          "canonical_text": "execute sql in \"dble-1\" and the result should be consistent with mysql",
+          "count": 2201,
+          "files": 27
+        },
+        {
+          "canonical_text": "execute sql in \"dble-1\" in \"user\" mode",
+          "count": 1922,
+          "files": 200
+        }
+      ]
+    },
+    "permissive": {
+      "n_steps": 635586,
+      "n_repos": 211,
+      "n_unique_texts": 112494,
+      "exact_dup_rate": 0.823,
+      "n_clusters": 43550,
+      "steps_in_clusters": 566674,
+      "top_5_clusters": [
+        {
+          "canonical_text": "the request is sent",
+          "count": 16815,
+          "files": 700
+        },
+        {
+          "canonical_text": "the response status is 200 OK",
+          "count": 6050,
+          "files": 670
+        },
+        {
+          "canonical_text": "status 200",
+          "count": 5127,
+          "files": 736
+        },
+        {
+          "canonical_text": "executing query:",
+          "count": 4845,
+          "files": 576
+        },
+        {
+          "canonical_text": "method GET",
+          "count": 4794,
+          "files": 692
+        }
+      ]
+    },
+    "unknown": {
+      "n_steps": 174077,
+      "n_repos": 33,
+      "n_unique_texts": 35492,
+      "exact_dup_rate": 0.7961,
+      "n_clusters": 10574,
+      "steps_in_clusters": 149167,
+      "top_5_clusters": [
+        {
+          "canonical_text": "I use an authentication token",
+          "count": 5867,
+          "files": 213
+        },
+        {
+          "canonical_text": "the current account is \"test1\"",
+          "count": 5825,
+          "files": 200
+        },
+        {
+          "canonical_text": "the response status should be \"200\"",
+          "count": 2853,
+          "files": 170
+        },
+        {
+          "canonical_text": "sidekiq should have 1 \"request-log\" job",
+          "count": 2619,
+          "files": 92
+        },
+        {
+          "canonical_text": "I am an admin of account \"test1\"",
+          "count": 2601,
+          "files": 201
+        }
+      ]
+    },
+    "unlicensed": {
+      "n_steps": 71656,
+      "n_repos": 63,
+      "n_unique_texts": 23838,
+      "exact_dup_rate": 0.6673,
+      "n_clusters": 8330,
+      "steps_in_clusters": 56148,
+      "top_5_clusters": [
+        {
+          "canonical_text": "the following input:",
+          "count": 780,
+          "files": 780
+        },
+        {
+          "canonical_text": "the following style:",
+          "count": 780,
+          "files": 780
+        },
+        {
+          "canonical_text": "the HTTP status code should be \"200\"",
+          "count": 627,
+          "files": 101
+        },
+        {
+          "canonical_text": "I cite all items",
+          "count": 543,
+          "files": 543
+        },
+        {
+          "canonical_text": "the result should be:",
+          "count": 543,
+          "files": 543
+        }
+      ]
+    }
+  }
+}
