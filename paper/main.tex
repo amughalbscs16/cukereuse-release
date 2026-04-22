@@ -191,8 +191,8 @@ step-text level across a published cross-repository corpus.
         than a canonical CDN study because the ratings are author
         assessments rather than the outcome of questionnaire-based
         elicitation from users or designers, which is the methodology
-        canonical CDN contributions typically follow; §\ref{sec:cdn}
-        discloses this limitation explicitly.
+        canonical CDN contributions typically follow;
+        Appendix~\ref{app:cdn} discloses this limitation explicitly.
   \item An empirical threshold-calibration study on 1{,}020 labelled pairs
         stratified across cosine-similarity bands, reporting precision,
         recall, and F$_1$ with bootstrap 95\,\% confidence intervals per
@@ -237,7 +237,7 @@ interventions do the problematic dimensions motivate?
 Section~\ref{sec:corpus} addresses RQ1 (headline rate, licence
 stratification, size analysis), Section~\ref{sec:evaluation}
 addresses RQ2 and RQ3 (calibration, baselines, score-free
-relabelling), and Section~\ref{sec:cdn} addresses RQ4.
+relabelling), and Appendix~\ref{app:cdn} addresses RQ4.
 
 We frame our contribution as \emph{orthogonal} to execution-based
 scenario-duplicate detection \citep{binamungu2018vst}: the two
@@ -279,7 +279,7 @@ useful.
 
 Section~\ref{sec:background} surveys BDD, clone detection, and CDN.
 Section~\ref{sec:related} positions our work against prior art.
-Section~\ref{sec:cdn} presents the CDN analysis.
+Appendix~\ref{app:cdn} presents the CDN-structured critique.
 Section~\ref{sec:approach} details the algorithmic pipeline.
 Section~\ref{sec:corpus} describes corpus construction.
 Section~\ref{sec:evaluation} reports the calibration study.
@@ -370,26 +370,33 @@ every unique step in our 1.1-million-step corpus in under ten
 minutes of CPU time.
 
 \subsection{Cognitive Dimensions of Notations}
+\label{sec:background:cdn}
 
 The Cognitive Dimensions of Notations (CDN) framework
 \citep{green1989cdn,green1996petre,blackwell2003cdn} is a
 language-independent vocabulary for discussing the usability of
-information artefacts, programming languages, visual notations, forms,
-control panels. Its premise is that superficially-different media share
-a small set of design trade-offs that practitioners repeatedly
-encounter, and naming those trade-offs enables comparative discussion.
-CDN comprises fourteen dimensions (viscosity, hidden dependencies,
-premature commitment, role-expressiveness, consistency, diffuseness,
-error-proneness, hard mental operations, closeness of mapping,
-progressive evaluation, provisionality, visibility, abstraction, and
-secondary notation) that we apply to Gherkin in Section~\ref{sec:cdn}.
-
-CDN has been applied to programming languages
-\citep{kutar2002cdn,clarke2004cdn}, to visual programming environments
-\citep{green1992visualbasic}, to end-user programming
-\citep{blackwell2004firstmover}, and to concrete APIs
-\citep{stylos2007usability,piccioni2013apis}. It has not, to our
-knowledge, been applied to BDD notations in peer-reviewed literature.
+information artefacts: programming languages, visual notations,
+forms, control panels. CDN comprises fourteen dimensions
+(viscosity, hidden dependencies, premature commitment,
+role-expressiveness, consistency, diffuseness, error-proneness,
+hard mental operations, closeness of mapping, progressive
+evaluation, provisionality, visibility, abstraction, and secondary
+notation). CDN has been applied to programming languages
+\citep{kutar2002cdn,clarke2004cdn}, visual programming environments
+\citep{green1992visualbasic}, end-user programming
+\citep{blackwell2004firstmover}, and concrete APIs
+\citep{stylos2007usability,piccioni2013apis}; it has not, to our
+knowledge, been applied to BDD notations in peer-reviewed
+literature. We present a CDN-structured critique of Gherkin as
+Appendix~\ref{app:cdn}, rating each of the fourteen dimensions
+against concrete observations from our 347-repository corpus. The
+headline finding that motivates the tool interventions discussed
+in Section~\ref{sec:discussion} is that eight of fourteen
+dimensions are rated problematic or unsupported; in particular the
+viscosity and consistency ratings explain why BDD suites of
+non-trivial size tend toward massive step-text duplication (our
+80.2\,\% exact-duplication figure), and why standard refactoring
+tools offer no help.
 
 \section{Related Work}
 \label{sec:related}
@@ -547,220 +554,6 @@ shallow sparse cloning via Git's \texttt{--filter} and
 is the bandwidth optimisation that keeps the corpus-construction
 pipeline lightweight and reproducible.
 
-\section{A CDN-Structured Critique of Gherkin (author assessment)}
-\label{sec:cdn}
-
-\emph{This section applies the fourteen dimensions of the CDN framework
-\citep{green1989cdn,green1996petre,blackwell2003cdn} to Gherkin as a
-notation in production use. Each dimension is rated as favourable,
-neutral, or problematic based on concrete examples from our empirical
-corpus (Section~\ref{sec:corpus}).}
-
-\paragraph{Methodology and its limits.} Canonical CDN practice
-\citep{blackwell2003cdn} prescribes a structured elicitation via
-questionnaire or expert-panel discussion, with ratings derived from
-user or designer reports. The ratings below are the author's
-assessment, each grounded in a concrete observation from the
-347-repository corpus. This methodology is sufficient for a
-literature-first CDN of Gherkin but is not a substitute for a
-user-study CDN, which we leave for future work. Independent replication
-by a CDN expert is invited and straightforward: the corpus is released,
-so every claim is auditable against the underlying step-text
-observations.
-
-\subsection{Viscosity (Problematic)}
-\textit{Resistance to change; how much effort a small modification
-requires.} Our corpus contains 82{,}545 exact-duplicate clusters
-under exact detection and 65{,}242 under hybrid detection. The
-largest cluster (\texttt{the response status is 200 OK}) has 20{,}737
-occurrences across 2{,}245 distinct \texttt{.feature} files. Renaming
-this phrasing to \texttt{the response is 200} requires touching 2{,}245
-files, each in a distinct execution context. No Gherkin IDE today
-offers project-wide rename-step refactoring that preserves glue-code
-bindings; the operation reduces in practice to \texttt{sed}
-with risk. We observe 86 exact clusters with more than 1{,}000
-occurrences each, each representing a multi-thousand-touchpoint
-refactor that Gherkin's viscosity effectively prices out of the
-maintenance budget.
-
-\subsection{Hidden dependencies (Problematic)}
-\textit{Things that depend on each other without visible links.} Every
-Gherkin step text binds to glue code via regex match. That binding
-is invisible from the feature file. The step \texttt{the request is
-sent} (16{,}815 occurrences in the corpus) must resolve to a step
-definition somewhere in the project; the feature file gives no hint
-where to look. Duplicate step definitions with different glue, two
-methods both matched by the same step text, with subtly different
-behaviour, produce silent test drift. We observe this shape of
-collision in multiple projects; \texttt{keygen-sh/keygen-api}'s
-\texttt{I use an authentication token} (5{,}880 occurrences under
-hybrid) has at least two step-definition locations, each valid in
-one context and misleading in the other.
-
-\subsection{Premature commitment (Problematic)}
-\textit{Forced to decide something before having the information.} A
-scenario author writing \texttt{the current account is "test1"} is
-simultaneously choosing the vocabulary (\texttt{the current account}),
-the parameter shape (\texttt{is} versus \texttt{has} versus
-\texttt{owns}), and the quoting style for the fixture identifier. In
-\texttt{keygen-api} we observe 170 distinct parametric variants of
-this phrasing family; the team committed to a shape too early and
-alignment drift produced near-duplicates that hybrid detection now
-surfaces.
-
-\subsection{Role-expressiveness (Mixed)}
-\textit{Can you tell what each piece of the notation does from looking
-at it?} Business-vocabulary steps score well: \texttt{I am an admin of
-account "test1"} (2{,}601 occurrences) is self-explanatory. Karate-style
-\citep{karate2020} scripting steps score poorly: \texttt{def invoiceId
-= callonce uuid10} is not a BDD step in the Dan-North sense
-\citep{north2006bdd}, but a Karate script in Gherkin's clothing.
-
-\subsection{Consistency (Problematic)}
-\textit{Similar things are expressed similarly.} Our corpus surfaces
-tens of thousands of paraphrase pairs under the hybrid strategy. The
-classic example is the HTTP-200 assertion: \texttt{the response status
-is 200 OK} (6{,}050 exact occurrences), \texttt{status 200} (6{,}266),
-and \texttt{the response status should be "200"} (2{,}853) coexist in
-overlapping repositories. Gherkin provides zero enforcement of
-consistency at the notation level, and no project-local linter has
-been proposed in the literature for this purpose.
-
-\subsection{Diffuseness (Variable, often problematic)}
-\textit{Too verbose or too cryptic.} One cluster we observe contains
-the phrasing \texttt{I create a new project named "X" by clicking on
-"New Project" in the menu bar, selecting "Practice / Just for fun"
-from the dropdown, choosing file "Project\_1.xml", and clicking the
-"Create Project" button}, 220 characters of implementation narrative
-embedded in what should be a business-level step. There are 34 distinct
-parametric variants in the corpus, differing only in the quoted project
-name. This is simultaneously diffuse and inconsistent.
-
-\subsection{Error-proneness (Problematic)}
-\textit{Invites mistakes.} Three closely-related phrasings for the
-HTTP-200 assertion coexist in the corpus. A developer who wants to
-assert ``200 OK'' now picks one by habit. If any two of the underlying
-step definitions have subtly different behaviour (one ignores headers,
-another does not), the choice of phrasing silently changes what the
-test verifies, a class of bug that existed before the test was
-written.
-
-\subsection{Hard mental operations (Moderate)}
-\textit{Operations exceeding working-memory limits.} Scenario Outlines
-with many-column Examples tables force the reader to mentally
-substitute across columns. In our corpus 66{,}020 steps (5.9\,\%) are
-in Scenario Outlines. Heavy-outline projects such as
-\texttt{opencypher/openCypher} \citep{opencypher2018} include outlines
-with ten or more Examples columns.
-
-\subsection{Closeness of mapping (Good / Problematic, split population)}
-\textit{Does the notation match the problem domain?} The corpus
-exhibits two sub-populations with different ratings. Business-domain
-projects such as \texttt{cucumber/\allowbreak cucumber-rails} and
-\texttt{opencypher/\allowbreak openCypher} \citep{opencypher2018} use
-step texts that map directly onto user-visible behaviour (``the user
-submits valid credentials''); Closeness of Mapping is \emph{Good} for
-this population. API-testing projects such as
-\texttt{keygen-sh/\allowbreak keygen-api} and the Karate-style
-projects \citep{karate2020} use step texts such as
-\texttt{I send a GET request to "/accounts/\ldots/upgrade"}
-that map tightly onto the HTTP wire format but drift far from the
-business-domain vocabulary Gherkin originally advertised; Closeness
-of Mapping is \emph{Problematic} for this population.
-Thirteen of our top-twenty hybrid clusters (Section~\ref{sec:evaluation:cluster-size})
-are HTTP-testing vocabulary, suggesting the API-test sub-population
-is the majority of the corpus's volume.
-
-\subsection{Progressive evaluation (Unsupported)}
-\textit{Can you run partial work and see intermediate results?} None
-of the major Gherkin runners support executing a single step in
-isolation without its enclosing scenario context. Tag-based filtering
-\citep{cucumber2023tags} is the closest approximation but selects
-whole scenarios.
-
-\subsection{Provisionality (Unsupported)}
-\textit{Can you sketch without committing?} Gherkin has no
-scratch mode. Every step that parses is a first-class production
-step. The closest affordance is the \texttt{@wip} tag, a coarse
-boolean rather than a provisional marker on individual lines.
-
-\subsection{Visibility (Problematic at scale)}
-\textit{Can you see what's there?} In a 23.7k-file corpus, no
-built-in Gherkin tool lets a maintainer answer \emph{``where else is
-this step used?''} without text search. Our 86 clusters with
-$\geq 1{,}000$ occurrences would each benefit from an IDE
-``find-usages'' affordance analogous to Java's Find Usages in IntelliJ
-\citep{intellij2024findusages}. In Gherkin, that operation reduces to
-grep and manual deduplication. The HTML cluster report emitted by
-\tool\ is one response to this gap.
-
-\subsection{Abstraction (Supported, under-used)}
-\textit{Mechanisms for user-defined abstractions.} Gherkin supports
-Background blocks, Scenario Outlines with Examples tables, and
-step-definition abstractions in glue code. All three are available;
-none is the path of least resistance. In our corpus 5.5\,\% of steps
-are inside Backgrounds and 5.9\,\% inside Outlines; the rest are
-copy-paste. The \texttt{git-town/git-town} project
-\citep{gittown2024} is a striking exception: Backgrounds dominate,
-and the project's internal conventions minimise duplicate preamble.
-
-\subsection{Secondary notation (Supported, informal)}
-\textit{Extra information beyond the formal syntax.} Gherkin supports
-tags (\texttt{@smoke}, \texttt{@api}, \texttt{@wip}), comments
-(\texttt{\#}), and table alignment. Conventions vary widely across
-projects; a reader entering a new codebase cannot predict which.
-
-\subsection{Summary of ratings}
-
-Eight of the fourteen dimensions are rated problematic or unsupported
-(Table~\ref{tab:cdn}, Figure~\ref{fig:cdn-radar}). The viscosity and
-consistency ratings are particularly load-bearing: they explain why
-BDD suites of non-trivial size tend toward massive step-text
-duplication (our 80.2\,\% exact-duplication figure), and why standard
-refactoring tools offer no help.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.7\textwidth]{figures/fig_cdn_radar.pdf}
-\caption{Cognitive Dimensions of Notations ratings for Gherkin as a
-notation in production use. The red band marks ratings in the
-problematic or unsupported range; the green band marks ratings in
-the good range. Eight of the fourteen dimensions fall into the red
-band, three into the middle (mixed or moderate), and three into the
-favourable band for supported-but-underused or informally-present
-features. The ratings are grounded in empirical observations drawn
-from the 347-repository corpus described in
-Section~\ref{sec:corpus}; each dimension's narrative in
-Section~\ref{sec:cdn} cites a concrete example.}
-\label{fig:cdn-radar}
-\end{figure}
-
-\begin{table}[t]
-\centering
-\caption{Summary of CDN ratings for Gherkin.}
-\label{tab:cdn}
-\begin{tabular}{llc}
-\toprule
-\# & Dimension & Rating \\
-\midrule
-1 & Viscosity & Problematic \\
-2 & Hidden dependencies & Problematic \\
-3 & Premature commitment & Problematic \\
-4 & Role-expressiveness & Mixed \\
-5 & Consistency & Problematic \\
-6 & Diffuseness & Variable / problematic \\
-7 & Error-proneness & Problematic \\
-8 & Hard mental operations & Moderate \\
-9 & Closeness of mapping & Good / Problematic (split) \\
-10 & Progressive evaluation & Unsupported \\
-11 & Provisionality & Unsupported \\
-12 & Visibility & Problematic at scale \\
-13 & Abstraction & Supported, under-used \\
-14 & Secondary notation & Supported, informal \\
-\bottomrule
-\end{tabular}
-\end{table}
-
 \section{Approach}
 \label{sec:approach}
 
@@ -878,7 +671,7 @@ inline CSS, collapsible cluster cards, and file:line links for every
 step occurrence. The HTML report has proved sufficient visibility for
 maintainer-level triage of the top clusters in a large suite; it is
 the \tool\ response to the CDN Visibility gap identified in
-Section~\ref{sec:cdn}.
+Appendix~\ref{app:cdn}.
 
 \section{Corpus Construction}
 \label{sec:corpus}
@@ -1855,8 +1648,8 @@ F$_1$ numbers bound that quality.
 
 \subsection{Cognitive Dimensions interventions}
 
-Three concrete tool interventions follow from the CDN analysis in
-Section~\ref{sec:cdn}. The released artefact realises one of them
+Three concrete tool interventions follow from the CDN-structured
+critique in Appendix~\ref{app:cdn}. The released artefact realises one of them
 (the first); the remaining two are specified but not implemented in
 the present tool and are listed in Section~\ref{sec:future}.
 
@@ -2089,7 +1882,7 @@ authors to specific roadmaps.
   \item \textbf{Glue-code analysis.} Extending detection from
         step text to step-definition bodies would address the
         silent-drift failure mode identified in
-        Section~\ref{sec:cdn}. AST-level diffing or neural
+        Appendix~\ref{app:cdn}. AST-level diffing or neural
         code-similarity are plausible implementation routes;
         stable AST support in Python, TypeScript, Ruby, and
         Java makes this tractable for most of the corpus.
@@ -2165,6 +1958,225 @@ He has professional experience as both a Business Analyst and a
 Software Engineer. His research interests focus on the impact of
 technology on business performance, product quality analytics, and
 the automation of industrial pipelines and processes.
+
+
+\appendix
+
+\section{A CDN-Structured Critique of Gherkin (author assessment)}
+\label{app:cdn}
+\label{sec:cdn}
+
+\emph{This appendix applies the fourteen dimensions of the CDN
+framework \citep{green1989cdn,green1996petre,blackwell2003cdn} to
+Gherkin as a notation in production use. Each dimension is rated
+as favourable, neutral, or problematic based on concrete examples
+from the empirical corpus described in
+Section~\ref{sec:corpus}.}
+
+\paragraph{Methodology and its limits.} Canonical CDN practice
+\citep{blackwell2003cdn} prescribes a structured elicitation via
+questionnaire or expert-panel discussion, with ratings derived from
+user or designer reports. The ratings below are the author's
+assessment, each grounded in a concrete observation from the
+347-repository corpus. This methodology is sufficient for a
+literature-first CDN of Gherkin but is not a substitute for a
+user-study CDN, which we leave for future work. Independent replication
+by a CDN expert is invited and straightforward: the corpus is released,
+so every claim is auditable against the underlying step-text
+observations.
+
+\subsection{Viscosity (Problematic)}
+\textit{Resistance to change; how much effort a small modification
+requires.} Our corpus contains 82{,}545 exact-duplicate clusters
+under exact detection and 65{,}242 under hybrid detection. The
+largest cluster (\texttt{the response status is 200 OK}) has 20{,}737
+occurrences across 2{,}245 distinct \texttt{.feature} files. Renaming
+this phrasing to \texttt{the response is 200} requires touching 2{,}245
+files, each in a distinct execution context. No Gherkin IDE today
+offers project-wide rename-step refactoring that preserves glue-code
+bindings; the operation reduces in practice to \texttt{sed}
+with risk. We observe 86 exact clusters with more than 1{,}000
+occurrences each, each representing a multi-thousand-touchpoint
+refactor that Gherkin's viscosity effectively prices out of the
+maintenance budget.
+
+\subsection{Hidden dependencies (Problematic)}
+\textit{Things that depend on each other without visible links.} Every
+Gherkin step text binds to glue code via regex match. That binding
+is invisible from the feature file. The step \texttt{the request is
+sent} (16{,}815 occurrences in the corpus) must resolve to a step
+definition somewhere in the project; the feature file gives no hint
+where to look. Duplicate step definitions with different glue, two
+methods both matched by the same step text, with subtly different
+behaviour, produce silent test drift. We observe this shape of
+collision in multiple projects; \texttt{keygen-sh/keygen-api}'s
+\texttt{I use an authentication token} (5{,}880 occurrences under
+hybrid) has at least two step-definition locations, each valid in
+one context and misleading in the other.
+
+\subsection{Premature commitment (Problematic)}
+\textit{Forced to decide something before having the information.} A
+scenario author writing \texttt{the current account is "test1"} is
+simultaneously choosing the vocabulary (\texttt{the current account}),
+the parameter shape (\texttt{is} versus \texttt{has} versus
+\texttt{owns}), and the quoting style for the fixture identifier. In
+\texttt{keygen-api} we observe 170 distinct parametric variants of
+this phrasing family; the team committed to a shape too early and
+alignment drift produced near-duplicates that hybrid detection now
+surfaces.
+
+\subsection{Role-expressiveness (Mixed)}
+\textit{Can you tell what each piece of the notation does from looking
+at it?} Business-vocabulary steps score well: \texttt{I am an admin of
+account "test1"} (2{,}601 occurrences) is self-explanatory. Karate-style
+\citep{karate2020} scripting steps score poorly: \texttt{def invoiceId
+= callonce uuid10} is not a BDD step in the Dan-North sense
+\citep{north2006bdd}, but a Karate script in Gherkin's clothing.
+
+\subsection{Consistency (Problematic)}
+\textit{Similar things are expressed similarly.} Our corpus surfaces
+tens of thousands of paraphrase pairs under the hybrid strategy. The
+classic example is the HTTP-200 assertion: \texttt{the response status
+is 200 OK} (6{,}050 exact occurrences), \texttt{status 200} (6{,}266),
+and \texttt{the response status should be "200"} (2{,}853) coexist in
+overlapping repositories. Gherkin provides zero enforcement of
+consistency at the notation level, and no project-local linter has
+been proposed in the literature for this purpose.
+
+\subsection{Diffuseness (Variable, often problematic)}
+\textit{Too verbose or too cryptic.} One cluster we observe contains
+the phrasing \texttt{I create a new project named "X" by clicking on
+"New Project" in the menu bar, selecting "Practice / Just for fun"
+from the dropdown, choosing file "Project\_1.xml", and clicking the
+"Create Project" button}, 220 characters of implementation narrative
+embedded in what should be a business-level step. There are 34 distinct
+parametric variants in the corpus, differing only in the quoted project
+name. This is simultaneously diffuse and inconsistent.
+
+\subsection{Error-proneness (Problematic)}
+\textit{Invites mistakes.} Three closely-related phrasings for the
+HTTP-200 assertion coexist in the corpus. A developer who wants to
+assert ``200 OK'' now picks one by habit. If any two of the underlying
+step definitions have subtly different behaviour (one ignores headers,
+another does not), the choice of phrasing silently changes what the
+test verifies, a class of bug that existed before the test was
+written.
+
+\subsection{Hard mental operations (Moderate)}
+\textit{Operations exceeding working-memory limits.} Scenario Outlines
+with many-column Examples tables force the reader to mentally
+substitute across columns. In our corpus 66{,}020 steps (5.9\,\%) are
+in Scenario Outlines. Heavy-outline projects such as
+\texttt{opencypher/openCypher} \citep{opencypher2018} include outlines
+with ten or more Examples columns.
+
+\subsection{Closeness of mapping (Good / Problematic, split population)}
+\textit{Does the notation match the problem domain?} The corpus
+exhibits two sub-populations with different ratings. Business-domain
+projects such as \texttt{cucumber/\allowbreak cucumber-rails} and
+\texttt{opencypher/\allowbreak openCypher} \citep{opencypher2018} use
+step texts that map directly onto user-visible behaviour (``the user
+submits valid credentials''); Closeness of Mapping is \emph{Good} for
+this population. API-testing projects such as
+\texttt{keygen-sh/\allowbreak keygen-api} and the Karate-style
+projects \citep{karate2020} use step texts such as
+\texttt{I send a GET request to "/accounts/\ldots/upgrade"}
+that map tightly onto the HTTP wire format but drift far from the
+business-domain vocabulary Gherkin originally advertised; Closeness
+of Mapping is \emph{Problematic} for this population.
+Thirteen of our top-twenty hybrid clusters (Section~\ref{sec:evaluation:cluster-size})
+are HTTP-testing vocabulary, suggesting the API-test sub-population
+is the majority of the corpus's volume.
+
+\subsection{Progressive evaluation (Unsupported)}
+\textit{Can you run partial work and see intermediate results?} None
+of the major Gherkin runners support executing a single step in
+isolation without its enclosing scenario context. Tag-based filtering
+\citep{cucumber2023tags} is the closest approximation but selects
+whole scenarios.
+
+\subsection{Provisionality (Unsupported)}
+\textit{Can you sketch without committing?} Gherkin has no
+scratch mode. Every step that parses is a first-class production
+step. The closest affordance is the \texttt{@wip} tag, a coarse
+boolean rather than a provisional marker on individual lines.
+
+\subsection{Visibility (Problematic at scale)}
+\textit{Can you see what's there?} In a 23.7k-file corpus, no
+built-in Gherkin tool lets a maintainer answer \emph{``where else is
+this step used?''} without text search. Our 86 clusters with
+$\geq 1{,}000$ occurrences would each benefit from an IDE
+``find-usages'' affordance analogous to Java's Find Usages in IntelliJ
+\citep{intellij2024findusages}. In Gherkin, that operation reduces to
+grep and manual deduplication. The HTML cluster report emitted by
+\tool\ is one response to this gap.
+
+\subsection{Abstraction (Supported, under-used)}
+\textit{Mechanisms for user-defined abstractions.} Gherkin supports
+Background blocks, Scenario Outlines with Examples tables, and
+step-definition abstractions in glue code. All three are available;
+none is the path of least resistance. In our corpus 5.5\,\% of steps
+are inside Backgrounds and 5.9\,\% inside Outlines; the rest are
+copy-paste. The \texttt{git-town/git-town} project
+\citep{gittown2024} is a striking exception: Backgrounds dominate,
+and the project's internal conventions minimise duplicate preamble.
+
+\subsection{Secondary notation (Supported, informal)}
+\textit{Extra information beyond the formal syntax.} Gherkin supports
+tags (\texttt{@smoke}, \texttt{@api}, \texttt{@wip}), comments
+(\texttt{\#}), and table alignment. Conventions vary widely across
+projects; a reader entering a new codebase cannot predict which.
+
+\subsection{Summary of ratings}
+
+Eight of the fourteen dimensions are rated problematic or unsupported
+(Table~\ref{tab:cdn}, Figure~\ref{fig:cdn-radar}). The viscosity and
+consistency ratings are particularly load-bearing: they explain why
+BDD suites of non-trivial size tend toward massive step-text
+duplication (our 80.2\,\% exact-duplication figure), and why standard
+refactoring tools offer no help.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.7\textwidth]{figures/fig_cdn_radar.pdf}
+\caption{Cognitive Dimensions of Notations ratings for Gherkin as a
+notation in production use. The red band marks ratings in the
+problematic or unsupported range; the green band marks ratings in
+the good range. Eight of the fourteen dimensions fall into the red
+band, three into the middle (mixed or moderate), and three into the
+favourable band for supported-but-underused or informally-present
+features. The ratings are grounded in empirical observations drawn
+from the 347-repository corpus described in
+Section~\ref{sec:corpus}; each dimension's narrative in this
+appendix cites a concrete example.}
+\label{fig:cdn-radar}
+\end{figure}
+
+\begin{table}[t]
+\centering
+\caption{Summary of CDN ratings for Gherkin.}
+\label{tab:cdn}
+\begin{tabular}{llc}
+\toprule
+\# & Dimension & Rating \\
+\midrule
+1 & Viscosity & Problematic \\
+2 & Hidden dependencies & Problematic \\
+3 & Premature commitment & Problematic \\
+4 & Role-expressiveness & Mixed \\
+5 & Consistency & Problematic \\
+6 & Diffuseness & Variable / problematic \\
+7 & Error-proneness & Problematic \\
+8 & Hard mental operations & Moderate \\
+9 & Closeness of mapping & Good / Problematic (split) \\
+10 & Progressive evaluation & Unsupported \\
+11 & Provisionality & Unsupported \\
+12 & Visibility & Problematic at scale \\
+13 & Abstraction & Supported, under-used \\
+14 & Secondary notation & Supported, informal \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \bibliographystyle{plainnat}
 \bibliography{references}
