@@ -10,7 +10,7 @@ Ships with:
 - a CLI tool (`cukereuse`)
 - a corpus of 1.11M Gherkin steps from 347 public GitHub repositories
 - a 1,020-pair labelled calibration set with a written rubric
-- a research paper (accompanying publication; details forthcoming)
+- an accompanying preprint: [arXiv:2604.20462](https://arxiv.org/abs/2604.20462) (also under review at *Software Quality Journal*)
 
 ## Who this is for
 
@@ -67,7 +67,7 @@ Every run produces a browsable HTML report (inline CSS, collapsible cluster card
 | Semantic pair classification | `semantic` (SBERT cosine) | 0.82 |
 | Project-wide paraphrase-aware cluster report | `hybrid` (cos + Lev band) | cos 0.82, Lev 0.30–0.95 |
 
-Thresholds are calibrated against 1,020 labelled pairs under two evaluation protocols (primary rubric and a score-free second-pass relabelling). Full numbers, bootstrap confidence intervals, and the pair-vs-cluster threshold analysis will be in the accompanying paper (forthcoming).
+Thresholds are calibrated against 1,020 labelled pairs under two evaluation protocols (primary rubric and a score-free second-pass relabelling). Full numbers, bootstrap confidence intervals, and the pair-vs-cluster threshold analysis are in the accompanying preprint: [arXiv:2604.20462](https://arxiv.org/abs/2604.20462).
 
 On the calibration benchmark included in this repository, **near-exact** is the strongest pair-level classifier (F₁ = 0.822 on score-free labels, F₁ = 0.862 on the primary rubric). **Hybrid** is the recommended strategy for building project-wide cluster reports because its Levenshtein band prevents transitive chaining that pure semantic clustering suffers from.
 
@@ -136,8 +136,13 @@ These are the citable headline numbers from the calibration bundle in this repos
 
 ## Paper
 
-The research paper accompanying this release is under preparation.
-It covers:
+The accompanying preprint is on arXiv:
+
+> Mughal, A. H., Fatima, N., & Bilal, M. (2026). *Finding Duplicates in 1.1M BDD Steps: cukereuse, a Paraphrase-Robust Static Detector for Cucumber and Gherkin.* arXiv preprint [arXiv:2604.20462](https://arxiv.org/abs/2604.20462).
+
+The manuscript is also under review at *Software Quality Journal* (Springer); the DOI will be added to this README and to `CITATION.cff` once the journal version is published.
+
+The paper covers:
 
 - Corpus construction and a size-vs-duplication analysis.
 - Four detection strategies with bootstrap-CI calibration under two evaluation protocols.
@@ -145,16 +150,23 @@ It covers:
 - A CDN-structured critique of Gherkin grounded in concrete corpus observations.
 - Failure-mode breakdown (polarity flips, HTTP-verb mismatch, framework-keyword semantic shift).
 
-The preprint URL and DOI will be added here once they are available;
-`CITATION.cff` in this repository will be updated at the same time.
-
 ## Citation
 
-Use the `CITATION.cff` file in the root of this repository (GitHub
-renders it as the "Cite this repository" widget in the sidebar).
-Once the preprint is live, the full citation entry will be populated
-with its arXiv ID and DOI. Until then, cite the dataset and tool
-release via the repository URL and the release tag.
+Please cite both the preprint and the software release. The `CITATION.cff` file in the root of this repository lets GitHub render a "Cite this repository" widget in the sidebar; its `preferred-citation` field points to the arXiv preprint.
+
+### BibTeX
+
+```bibtex
+@misc{mughal2026findingduplicates11mbdd,
+  title        = {Finding Duplicates in 1.1M BDD Steps: cukereuse, a Paraphrase-Robust Static Detector for Cucumber and Gherkin},
+  author       = {Ali Hassaan Mughal and Noor Fatima and Muhammad Bilal},
+  year         = {2026},
+  eprint       = {2604.20462},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.SE},
+  url          = {https://arxiv.org/abs/2604.20462}
+}
+```
 
 ## Licence
 
