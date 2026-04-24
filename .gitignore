@@ -60,3 +60,6 @@ analysis/report_hybrid.json
 
 # OS
 .Trash-*
+
+# JOSS paper staging — do not track paper/ until ready to submit
+/paper/

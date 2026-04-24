@@ -1,0 +1,87 @@
+name: Bug report
+description: Report something cukereuse is doing incorrectly (wrong cluster, crash, parse error, etc.).
+title: "[bug] "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Please fill in as much of the below as you can.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A short description of the problem.
+      placeholder: e.g. cukereuse grouped "I visit /foo" and "I visit /bar" into the same cluster, but they should be separate.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Exact command(s) and any relevant inputs.
+      placeholder: |
+        1. Clone my repo (or use fixture at ...)
+        2. Run: `cukereuse find-duplicates features --strategy hybrid`
+        3. Observe cluster 4 in the report
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      description: What did you expect to happen instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Actual output / error
+      description: Paste the exact command output. For cluster mistakes, paste the canonical text and 2-3 member step texts.
+      render: shell
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: e.g. Ubuntu 24.04, macOS 14.4, Windows 11
+    validations:
+      required: true
+
+  - type: input
+    id: python
+    attributes:
+      label: Python version
+      description: Output of `python --version`
+      placeholder: e.g. Python 3.11.9
+    validations:
+      required: true
+
+  - type: input
+    id: cukereuse-version
+    attributes:
+      label: cukereuse version
+      description: Output of `cukereuse --version` or the commit SHA if running from source.
+      placeholder: e.g. 0.1.0
+    validations:
+      required: true
+
+  - type: textarea
+    id: feature-snippet
+    attributes:
+      label: Minimal .feature snippet (optional)
+      description: If you can share a small snippet that reproduces the issue, paste it here.
+      render: gherkin
+
+  - type: checkboxes
+    id: coc
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree to follow the project's [Code of Conduct](../CODE_OF_CONDUCT.md).
+          required: true

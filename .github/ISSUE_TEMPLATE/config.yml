@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Usage question or discussion
+    url: https://github.com/amughalbscs16/cukereuse-release/discussions
+    about: Ask a usage question or start a discussion about the corpus or tool design.
+  - name: Preprint (methodology, calibration numbers, CDN critique)
+    url: https://arxiv.org/abs/2604.20462
+    about: Full methodology, bootstrap CIs, and failure-mode breakdown are in the accompanying preprint.
