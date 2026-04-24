@@ -1,7 +1,9 @@
 # cukereuse: duplicate step detection for Cucumber and Gherkin
 
+[![tests](https://github.com/amughalbscs16/cukereuse-release/actions/workflows/tests.yml/badge.svg)](https://github.com/amughalbscs16/cukereuse-release/actions/workflows/tests.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](pyproject.toml)
+[![arXiv](https://img.shields.io/badge/arXiv-2604.20462-b31b1b.svg)](https://arxiv.org/abs/2604.20462)
 [![Status](https://img.shields.io/badge/status-research_release-brightgreen.svg)](CITATION.cff)
 
 Static detector for duplicate and near-duplicate step text in `.feature` files. Works across Cucumber-JVM (Java), behave and pytest-bdd (Python), Cucumber-Ruby, cucumber-js, SpecFlow (.NET), and Behat (PHP). No test execution required. Runs on any repository.

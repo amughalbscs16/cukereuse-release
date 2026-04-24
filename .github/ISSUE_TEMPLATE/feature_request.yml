@@ -1,0 +1,50 @@
+name: Feature request
+description: Suggest a new feature, workflow, or improvement.
+title: "[feature] "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting an improvement. The most useful requests describe a concrete workflow, explain how the current behaviour falls short, and sketch the desired output.
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Workflow or use case
+      description: What are you trying to do with cukereuse? What BDD-suite maintenance task would this feature support?
+      placeholder: e.g. I want a pre-commit hook that flags when a new step is the n-th paraphrase of an existing one in my suite.
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-shortfall
+    attributes:
+      label: How does the current behaviour fall short?
+      description: What's missing, awkward, or blocked today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed
+    attributes:
+      label: Desired behaviour / proposed output
+      description: How would the feature appear — CLI flag, report field, new command, configuration option?
+      placeholder: |
+        e.g. Add a `cukereuse lint` subcommand that takes one or more .feature files on stdin/args and exits non-zero if any step has a paraphrase similarity >= 0.92 against the rest of the project.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you considered (optional)
+      description: Workarounds, scripts you've hacked together, or other tools that partially solve this.
+
+  - type: checkboxes
+    id: coc
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree to follow the project's [Code of Conduct](../CODE_OF_CONDUCT.md).
+          required: true
