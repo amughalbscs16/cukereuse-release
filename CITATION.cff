@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this tool or the corpus, please cite using the metadata below. The accompanying research paper is under preparation; its DOI and preprint URL will be added to this file once available."
+message: "If you use this tool or the corpus, please cite both the software (this repository) and the accompanying preprint below."
 title: "cukereuse: paraphrase-robust static duplicate step detection for Cucumber and Gherkin"
 type: software
 authors:
@@ -21,3 +21,23 @@ repository-code: "https://github.com/amughalbscs16/cukereuse-release"
 license: Apache-2.0
 version: 0.1.0
 date-released: 2026-04-22
+preferred-citation:
+  type: article
+  title: "Finding Duplicates in 1.1M BDD Steps: cukereuse, a Paraphrase-Robust Static Detector for Cucumber and Gherkin"
+  authors:
+    - family-names: Mughal
+      given-names: Ali Hassaan
+      orcid: "https://orcid.org/0000-0002-0724-9197"
+    - family-names: Fatima
+      given-names: Noor
+    - family-names: Bilal
+      given-names: Muhammad
+      orcid: "https://orcid.org/0000-0003-4106-0256"
+  year: 2026
+  journal: "arXiv preprint"
+  identifiers:
+    - type: other
+      value: "arXiv:2604.20462"
+      description: arXiv preprint ID
+  url: "https://arxiv.org/abs/2604.20462"
+  notes: "Also under review at Software Quality Journal (Springer)."
