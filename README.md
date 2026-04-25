@@ -4,6 +4,7 @@
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](pyproject.toml)
 [![arXiv](https://img.shields.io/badge/arXiv-2604.20462-b31b1b.svg)](https://arxiv.org/abs/2604.20462)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19754359.svg)](https://doi.org/10.5281/zenodo.19754359)
 [![Status](https://img.shields.io/badge/status-research_release-brightgreen.svg)](CITATION.cff)
 
 Static detector for duplicate and near-duplicate step text in `.feature` files. Works across Cucumber-JVM (Java), behave and pytest-bdd (Python), Cucumber-Ruby, cucumber-js, SpecFlow (.NET), and Behat (PHP). No test execution required. Runs on any repository.
@@ -158,6 +159,8 @@ Please cite both the preprint and the software release. The `CITATION.cff` file 
 
 ### BibTeX
 
+The preprint:
+
 ```bibtex
 @misc{mughal2026findingduplicates11mbdd,
   title        = {Finding Duplicates in 1.1M BDD Steps: cukereuse, a Paraphrase-Robust Static Detector for Cucumber and Gherkin},
@@ -167,6 +170,20 @@ Please cite both the preprint and the software release. The `CITATION.cff` file 
   archivePrefix= {arXiv},
   primaryClass = {cs.SE},
   url          = {https://arxiv.org/abs/2604.20462}
+}
+```
+
+The software / corpus archive (Zenodo):
+
+```bibtex
+@software{mughal2026cukereusev010,
+  title     = {cukereuse: A paraphrase-robust static detector for duplicate Gherkin steps in Behavior-Driven Development test suites},
+  author    = {Mughal, Ali Hassaan and Fatima, Noor and Bilal, Muhammad},
+  year      = {2026},
+  version   = {0.1.0},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.19754359},
+  url       = {https://doi.org/10.5281/zenodo.19754359}
 }
 ```
 

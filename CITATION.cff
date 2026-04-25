@@ -21,6 +21,13 @@ repository-code: "https://github.com/amughalbscs16/cukereuse-release"
 license: Apache-2.0
 version: 0.1.0
 date-released: 2026-04-22
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.19754359"
+    description: "Zenodo archive of the cukereuse v0.1.0 release (tool, corpus, labelled benchmark, scripts)."
+  - type: url
+    value: "https://zenodo.org/records/19754359"
+    description: "Zenodo record landing page."
 preferred-citation:
   type: article
   title: "Finding Duplicates in 1.1M BDD Steps: cukereuse, a Paraphrase-Robust Static Detector for Cucumber and Gherkin"
