@@ -13,7 +13,7 @@ Ships with:
 - a CLI tool (`cukereuse`)
 - a corpus of 1.11M Gherkin steps from 347 public GitHub repositories
 - a 1,020-pair labelled calibration set with a written rubric
-- an accompanying preprint: [arXiv:2604.20462](https://arxiv.org/abs/2604.20462) (also under review at *Software Quality Journal*)
+- an accompanying preprint: [arXiv:2604.20462](https://arxiv.org/abs/2604.20462) (also under review at *Information and Software Technology*)
 
 ## Who this is for
 
@@ -141,9 +141,9 @@ These are the citable headline numbers from the calibration bundle in this repos
 
 The accompanying preprint is on arXiv:
 
-> Mughal, A. H., Fatima, N., & Bilal, M. (2026). *Finding Duplicates in 1.1M BDD Steps: cukereuse, a Paraphrase-Robust Static Detector for Cucumber and Gherkin.* arXiv preprint [arXiv:2604.20462](https://arxiv.org/abs/2604.20462).
+> Mughal, A. H., Fatima, N., & Bilal, M. (2026). *Reducing Maintenance Burden in Behaviour-Driven Development: A Paraphrase-Robust Duplicate-Step Detector with a 1.1M-Step Open Benchmark.* arXiv preprint [arXiv:2604.20462](https://arxiv.org/abs/2604.20462).
 
-The manuscript is also under review at *Software Quality Journal* (Springer); the DOI will be added to this README and to `CITATION.cff` once the journal version is published.
+The manuscript is under review at *Information and Software Technology* (Elsevier); the DOI will be added to this README and to `CITATION.cff` once the journal version is published.
 
 The paper covers:
 
@@ -162,14 +162,15 @@ Please cite both the preprint and the software release. The `CITATION.cff` file 
 The preprint:
 
 ```bibtex
-@misc{mughal2026findingduplicates11mbdd,
-  title        = {Finding Duplicates in 1.1M BDD Steps: cukereuse, a Paraphrase-Robust Static Detector for Cucumber and Gherkin},
+@misc{mughal2026cukereuse,
+  title        = {Reducing Maintenance Burden in Behaviour-Driven Development: A Paraphrase-Robust Duplicate-Step Detector with a 1.1M-Step Open Benchmark},
   author       = {Ali Hassaan Mughal and Noor Fatima and Muhammad Bilal},
   year         = {2026},
   eprint       = {2604.20462},
   archivePrefix= {arXiv},
   primaryClass = {cs.SE},
-  url          = {https://arxiv.org/abs/2604.20462}
+  url          = {https://arxiv.org/abs/2604.20462},
+  note         = {Under review at \emph{Information and Software Technology} (Elsevier)}
 }
 ```
 

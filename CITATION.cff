@@ -30,7 +30,7 @@ identifiers:
     description: "Zenodo record landing page."
 preferred-citation:
   type: article
-  title: "Finding Duplicates in 1.1M BDD Steps: cukereuse, a Paraphrase-Robust Static Detector for Cucumber and Gherkin"
+  title: "Reducing Maintenance Burden in Behaviour-Driven Development: A Paraphrase-Robust Duplicate-Step Detector with a 1.1M-Step Open Benchmark"
   authors:
     - family-names: Mughal
       given-names: Ali Hassaan
@@ -47,4 +47,4 @@ preferred-citation:
       value: "arXiv:2604.20462"
       description: arXiv preprint ID
   url: "https://arxiv.org/abs/2604.20462"
-  notes: "Also under review at Software Quality Journal (Springer)."
+  notes: "Under review at Information and Software Technology (Elsevier)."
