@@ -555,7 +555,6 @@ def main() -> int:
         ("licence-stratified duplication", fig_license_stratified),
         ("threshold sweep + PR curves", fig_threshold_sweep),
         ("top-20 clusters", fig_top_clusters),
-        ("CDN radar", fig_cdn_radar),
         ("step-length histogram", fig_step_lengths),
         ("strategy trade-off ladder", fig_strategy_ladder),
     ]

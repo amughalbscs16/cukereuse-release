@@ -135,7 +135,6 @@ These are the citable headline numbers from the calibration bundle in this repos
 - **Circularity cost (primary-vs-score-free inter-protocol Cohen's κ):** 0.47.
 - **Lexical baselines (SourcererCC-style token Jaccard, NiCad-style TF-IDF char n-gram):** F₁ = 0.761 and 0.799.
 - **Labelled benchmark:** 1,020 pairs manually labelled by the three authors (500 by Mughal, 300 by Fatima, 220 by Bilal) under a released written rubric. Inter-annotator Fleiss' κ = 0.84 on a 60-pair overlap subset.
-- **CDN analysis of Gherkin:** 8 of 14 dimensions rated problematic or unsupported.
 
 ## Paper
 
@@ -150,7 +149,6 @@ The paper covers:
 - Corpus construction and a size-vs-duplication analysis.
 - Four detection strategies with bootstrap-CI calibration under two evaluation protocols.
 - Two lexical baselines (SourcererCC-style, NiCad-style) on the same benchmark.
-- A CDN-structured critique of Gherkin grounded in concrete corpus observations.
 - Failure-mode breakdown (polarity flips, HTTP-verb mismatch, framework-keyword semantic shift).
 
 ## Citation

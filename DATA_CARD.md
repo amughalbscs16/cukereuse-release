@@ -15,7 +15,7 @@ Follows the template from Gebru et al., *Datasheets for Datasets*, CACM 64(12), 
 ## 2. Composition
 
 - **What do the instances represent?** Step-level records extracted from `.feature` files in public GitHub repositories. One row per Given/When/Then/And/But step.
-- **How many instances are there?** 1,113,616 steps across 23,667 parsed `.feature` files (25,034 enumerated on disk; 1,367 are empty, tag-only, or fail the gherkin grammar) spanning 347 repositories.
+- **How many instances are there?** 1,113,616 steps across 23,667 parsed `.feature` files (25,028 enumerated on disk; 1,361 are empty, tag-only, or fail the gherkin grammar) spanning 347 repositories.
 - **What data does each instance contain?**
   - `repo`, `commit_sha` (40-char hex), `file_path`, `line`.
   - `keyword` (`Given` / `When` / `Then` / `And` / `But`).
@@ -40,7 +40,7 @@ Follows the template from Gebru et al., *Datasheets for Datasets*, CACM 64(12), 
 |---|---:|
 | repositories (post-filter: stars ≥ 10, not archived) | 347 |
 | `.feature` files (parsed into steps) | 23,667 |
-| `.feature` files (enumerated on disk) | 25,034 |
+| `.feature` files (enumerated on disk) | 25,028 |
 | steps (total) | 1,113,616 |
 | unique normalised step texts | 220,312 |
 | Background steps | 61,214 |
@@ -66,7 +66,7 @@ The permissive subset (approximately 57% of steps) is redistributable as raw con
 - **How was the data acquired?** Three-stage pipeline under `scripts/`:
   1. **Discovery** via GitHub's REST Search API. Two complementary queries: (a) `/search/repositories?q=language:Gherkin+stars:>=10` and (b) `/search/code?q="Feature:"+extension:feature` (plus the same shape for `Scenario:` and `Background:`). The BigQuery alternative via GH Archive was not used (Google Cloud billing not available at collection time); the REST path is sufficient at this scale. Before deduplication the candidate pool totalled approximately 1,333 repositories; after deduplication by `owner/name` and re-application of the stars and archived filters, 377 unique repositories passed.
   2. **Shallow plus sparse clone** via `git clone --depth 1 --filter=blob:none --no-checkout` followed by `git sparse-checkout set --no-cone '**/*.feature'`. Only blobs for matching paths are downloaded. Pinned commit SHAs are recorded in `corpus/clone_manifest.jsonl`. 368 of 377 targeted repositories cloned successfully (9 private/deleted); approximately 2 KB of bandwidth per step acquired.
-  3. **Parsing** via the `cukereuse` wrapper around `gherkin-official` v29 (Cucumber's authoritative parser), fanned across a thread pool. Emits `corpus/steps.parquet` (zstd-compressed). 21 of the 368 cloned repositories contribute zero steps to the final table (empty, tag-only, or ungrammatical files).
+  3. **Parsing** via the `cukereuse` wrapper around `gherkin-official` v29 (Cucumber's authoritative parser), fanned across a thread pool. Emits `corpus/steps.parquet` (zstd-compressed). 22 of the 368 cloned repositories contribute zero steps to the final table (empty, tag-only, or ungrammatical files).
 - **Over what timeframe?** Mining and parsing were run on 2026-04-19. Discovery captures GitHub's state on that day; pinned commit SHAs make the corpus content deterministic beyond that point.
 - **Ethical review?** Data is drawn exclusively from public GitHub repositories. Licence compatibility is tracked per repository. No deanonymisation; no aggregation beyond the step level.
 
@@ -91,7 +91,6 @@ Additional tasks the corpus supports:
 - Cross-ecosystem BDD practice analysis (Java/Cucumber-JVM, Ruby/Cucumber, PHP/Behat, Python/behave, JS/cucumber-js).
 - Pretraining or evaluation of language models on test-specification text.
 - Research into automatic test refactoring, step-definition generation, tag taxonomies.
-- Cognitive Dimensions of Notations analysis of BDD notations, grounded in concrete corpus examples (see the accompanying preprint: [arXiv:2604.20462](https://arxiv.org/abs/2604.20462)).
 
 Restrictions:
 
